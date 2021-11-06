@@ -19,6 +19,7 @@
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="BLL\" />
+    <Folder Include="DAL\DAL Classes\" />
     <Folder Include="DAL\wwwroot\" />
   </ItemGroup>
 

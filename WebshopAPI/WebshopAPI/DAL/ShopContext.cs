@@ -17,5 +17,11 @@ namespace WebshopAPI.DAL
         public DbSet<CPU> CPUs { get; set; }
         public DbSet<RAM> RAMs { get; set; }
         public DbSet<Motherboard> Motherboards { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelbuilder)
+        {
+            // A ModelBuilder-hez írt extension metódus meghívása
+            modelbuilder.Seed();
+        }
     }
 }

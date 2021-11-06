@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebshopAPI.DAL.Models;
 
 namespace WebshopAPI.DAL
 {
@@ -13,5 +14,8 @@ namespace WebshopAPI.DAL
         {
         }
 
+        public DbSet<CPU> CPUs { get; set; }
+        public DbSet<RAM> RAMs { get; set; }
+        public DbSet<Motherboard> Motherboards { get; set; }
     }
 }

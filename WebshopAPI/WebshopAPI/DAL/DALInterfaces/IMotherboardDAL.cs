@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebshopAPI.DAL.Models;
 
-namespace WebshopAPI.DAL.DAL_Interfaces
+namespace WebshopAPI.DAL.DALInterfaces
 {
-    interface IMotherboardDAL : IBaseDAL<Motherboard>
+    public interface IMotherboardDAL : IBaseDAL<Motherboard>
     {
         Task<IEnumerable<Motherboard>> GetCompatibleMotherboardsByMemorySocket(string MemorySocket);
         Task<IEnumerable<Motherboard>> GetCompatibleMotherboardsByCPUSocket(string CPUSocket);

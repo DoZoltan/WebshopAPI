@@ -10,7 +10,7 @@ namespace WebshopAPI.DAL.Models
     {
         public int Usb3Amount { get; set; }
         public bool Wifi { get; set; }
-        public string SizeStandard { get; set; }
+        public MotherboardSizeStandardEnum SizeStandard { get; set; }
         public CPUSocketEnum CPUSocketType { get; set; }
         public string MemorySocketType { get; set; }
         public int MaxMemorySize { get; set; }

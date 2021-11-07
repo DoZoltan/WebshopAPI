@@ -107,8 +107,8 @@ namespace WebshopAPI.DAL.Migrations
                     b.Property<int>("MaxMemorySize")
                         .HasColumnType("int");
 
-                    b.Property<string>("MemorySocketType")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("MemorySocketType")
+                        .HasColumnType("int");
 
                     b.Property<int>("NumberOfMemorySockets")
                         .HasColumnType("int");
@@ -119,8 +119,8 @@ namespace WebshopAPI.DAL.Migrations
                     b.Property<int>("SellPrice")
                         .HasColumnType("int");
 
-                    b.Property<string>("SizeStandard")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("SizeStandard")
+                        .HasColumnType("int");
 
                     b.Property<int>("Usb3Amount")
                         .HasColumnType("int");
@@ -141,11 +141,11 @@ namespace WebshopAPI.DAL.Migrations
                             CPUSocketType = 11,
                             ImgURL = "",
                             MaxMemorySize = 128,
-                            MemorySocketType = "DDR4",
+                            MemorySocketType = 4,
                             NumberOfMemorySockets = 4,
                             ProductName = "Test Motherboard 1",
                             SellPrice = 95,
-                            SizeStandard = "ATX",
+                            SizeStandard = 1,
                             Usb3Amount = 8,
                             Wifi = true
                         },
@@ -157,11 +157,11 @@ namespace WebshopAPI.DAL.Migrations
                             CPUSocketType = 27,
                             ImgURL = "",
                             MaxMemorySize = 128,
-                            MemorySocketType = "DDR5",
+                            MemorySocketType = 5,
                             NumberOfMemorySockets = 4,
                             ProductName = "Test Motherboard 2",
                             SellPrice = 125,
-                            SizeStandard = "EATX",
+                            SizeStandard = 4,
                             Usb3Amount = 6,
                             Wifi = true
                         });
@@ -195,8 +195,8 @@ namespace WebshopAPI.DAL.Migrations
                     b.Property<int>("SellPrice")
                         .HasColumnType("int");
 
-                    b.Property<string>("SocketType")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("SocketType")
+                        .HasColumnType("int");
 
                     b.Property<int>("Speed")
                         .HasColumnType("int");
@@ -216,7 +216,7 @@ namespace WebshopAPI.DAL.Migrations
                             ImgURL = "",
                             ProductName = "Test RAM 1",
                             SellPrice = 35,
-                            SocketType = "DDR4",
+                            SocketType = 4,
                             Speed = 4200
                         },
                         new
@@ -229,7 +229,7 @@ namespace WebshopAPI.DAL.Migrations
                             ImgURL = "",
                             ProductName = "Test RAM 2",
                             SellPrice = 99,
-                            SocketType = "DDR5",
+                            SocketType = 5,
                             Speed = 6700
                         });
                 });

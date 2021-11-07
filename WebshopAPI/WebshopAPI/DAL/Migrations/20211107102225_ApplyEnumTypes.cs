@@ -2,7 +2,7 @@
 
 namespace WebshopAPI.DAL.Migrations
 {
-    public partial class SocketEnumProperty : Migration
+    public partial class ApplyEnumTypes : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -35,9 +35,9 @@ namespace WebshopAPI.DAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Usb3Amount = table.Column<int>(type: "int", nullable: false),
                     Wifi = table.Column<bool>(type: "bit", nullable: false),
-                    SizeStandard = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SizeStandard = table.Column<int>(type: "int", nullable: false),
                     CPUSocketType = table.Column<int>(type: "int", nullable: false),
-                    MemorySocketType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MemorySocketType = table.Column<int>(type: "int", nullable: false),
                     MaxMemorySize = table.Column<int>(type: "int", nullable: false),
                     NumberOfMemorySockets = table.Column<int>(type: "int", nullable: false),
                     ProductName = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -60,7 +60,7 @@ namespace WebshopAPI.DAL.Migrations
                     Gb = table.Column<int>(type: "int", nullable: false),
                     Delay = table.Column<int>(type: "int", nullable: false),
                     Speed = table.Column<int>(type: "int", nullable: false),
-                    SocketType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SocketType = table.Column<int>(type: "int", nullable: false),
                     ProductName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Brand = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ImgURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -86,8 +86,8 @@ namespace WebshopAPI.DAL.Migrations
                 columns: new[] { "ID", "AcquisitionPrice", "Brand", "CPUSocketType", "ImgURL", "MaxMemorySize", "MemorySocketType", "NumberOfMemorySockets", "ProductName", "SellPrice", "SizeStandard", "Usb3Amount", "Wifi" },
                 values: new object[,]
                 {
-                    { 1, 80, "ASUS", 11, "", 128, "DDR4", 4, "Test Motherboard 1", 95, "ATX", 8, true },
-                    { 2, 110, "MSI", 27, "", 128, "DDR5", 4, "Test Motherboard 2", 125, "EATX", 6, true }
+                    { 1, 80, "ASUS", 11, "", 128, 4, 4, "Test Motherboard 1", 95, 1, 8, true },
+                    { 2, 110, "MSI", 27, "", 128, 5, 4, "Test Motherboard 2", 125, 4, 6, true }
                 });
 
             migrationBuilder.InsertData(
@@ -95,8 +95,8 @@ namespace WebshopAPI.DAL.Migrations
                 columns: new[] { "ID", "AcquisitionPrice", "Brand", "Delay", "Gb", "ImgURL", "ProductName", "SellPrice", "SocketType", "Speed" },
                 values: new object[,]
                 {
-                    { 1, 30, "G.SKILL", 8, 32, "", "Test RAM 1", 35, "DDR4", 4200 },
-                    { 2, 80, "KINGSTON", 12, 64, "", "Test RAM 2", 99, "DDR5", 6700 }
+                    { 1, 30, "G.SKILL", 8, 32, "", "Test RAM 1", 35, 4, 4200 },
+                    { 2, 80, "KINGSTON", 12, 64, "", "Test RAM 2", 99, 5, 6700 }
                 });
         }
 

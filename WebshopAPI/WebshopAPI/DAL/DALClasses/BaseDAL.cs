@@ -37,17 +37,19 @@ namespace WebshopAPI.DAL.DALClasses
             return await GetByID(lastId);
         }
 
-        public async Task<T> DeleteByID(int id)
+        public async Task<T> Delete(T product)
         {
-            var productForDeleting = await GetByID(id);
-
-            if (productForDeleting != null)
+            try
             {
-                _context.Set<T>().Remove(productForDeleting);
+                _context.Set<T>().Remove(product);
                 await _context.SaveChangesAsync();
             }
+            catch (DbUpdateException)
+            {
+                return null;
+            }
 
-            return productForDeleting;
+            return product;
         }
 
         public async Task<IEnumerable<T>> GetAll()

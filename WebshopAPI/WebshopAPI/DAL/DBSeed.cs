@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebshopAPI.DAL.Models;
+using WebshopAPI.Enums;
 
 namespace WebshopAPI.DAL
 {
@@ -24,7 +25,7 @@ namespace WebshopAPI.DAL
                     CoreNumber = 8,
                     L3Cache = 24,
                     Speed = 3700,
-                    SocketType = "LGA 1700",
+                    SocketType = CPUSocketEnum.LGA1700,
                 },
 
                 new CPU
@@ -38,7 +39,7 @@ namespace WebshopAPI.DAL
                     CoreNumber = 12,
                     L3Cache = 32,
                     Speed = 3900,
-                    SocketType = "AM4",
+                    SocketType = CPUSocketEnum.AM4,
                 }
             );
 
@@ -84,7 +85,7 @@ namespace WebshopAPI.DAL
                     Usb3Amount = 8,
                     Wifi = true,
                     SizeStandard = "ATX",
-                    CPUSocketType = "AM4",
+                    CPUSocketType = CPUSocketEnum.AM4,
                     MemorySocketType = "DDR4",
                     MaxMemorySize = 128,
                     NumberOfMemorySockets = 4,
@@ -101,7 +102,7 @@ namespace WebshopAPI.DAL
                     Usb3Amount = 6,
                     Wifi = true,
                     SizeStandard = "EATX",
-                    CPUSocketType = "LGA 1700",
+                    CPUSocketType = CPUSocketEnum.LGA1700,
                     MemorySocketType = "DDR5",
                     MaxMemorySize = 128,
                     NumberOfMemorySockets = 4,

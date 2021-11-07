@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebshopAPI.DAL.DALInterfaces;
 using WebshopAPI.DAL.Models;
+using WebshopAPI.Enums;
 
 namespace WebshopAPI.DAL.DALClasses
 {
@@ -18,7 +19,7 @@ namespace WebshopAPI.DAL.DALClasses
             _context = context;
         }
 
-        public async Task<IEnumerable<CPU>> GetCompatibleCPUsByMotherboardCPUSocket(string CPUSocket)
+        public async Task<IEnumerable<CPU>> GetCompatibleCPUsByMotherboardCPUSocket(CPUSocketEnum CPUSocket)
         {
             return await _context.CPUs.Where(cpu => cpu.SocketType == CPUSocket).ToListAsync();
         }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebshopAPI.BLL.Interfaces;
 
 namespace WebshopAPI.Controllers
 {
@@ -11,5 +12,11 @@ namespace WebshopAPI.Controllers
     [ApiController]
     public class MotherboardController : ControllerBase
     {
+        protected readonly IMotherboardBLL _motherboardBLL;
+
+        public MotherboardController(IMotherboardBLL motherboardBLL)
+        {
+            _motherboardBLL = motherboardBLL;
+        }
     }
 }

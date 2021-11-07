@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebshopAPI.Enums;
 
 namespace WebshopAPI.DAL.Models
 {
@@ -10,6 +11,6 @@ namespace WebshopAPI.DAL.Models
         public int Gb { get; set; }
         public int Delay { get; set; }
         public int Speed { get; set; }
-        public string SocketType { get; set; }
+        public RAMSocketTypeEnum SocketType { get; set; }
     }
 }

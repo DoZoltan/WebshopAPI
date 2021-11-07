@@ -55,7 +55,7 @@ namespace WebshopAPI.DAL
                     Gb = 32,
                     Delay = 8,
                     Speed = 4200,
-                    SocketType = "DDR4",
+                    SocketType = RAMSocketTypeEnum.DDR4,
                 },
 
                 new RAM
@@ -69,7 +69,7 @@ namespace WebshopAPI.DAL
                     Gb = 64,
                     Delay = 12,
                     Speed = 6700,
-                    SocketType = "DDR5",
+                    SocketType = RAMSocketTypeEnum.DDR5,
                 }
             );
 
@@ -86,7 +86,7 @@ namespace WebshopAPI.DAL
                     Wifi = true,
                     SizeStandard = MotherboardSizeStandardEnum.ATX,
                     CPUSocketType = CPUSocketEnum.AM4,
-                    MemorySocketType = "DDR4",
+                    MemorySocketType = RAMSocketTypeEnum.DDR4,
                     MaxMemorySize = 128,
                     NumberOfMemorySockets = 4,
                 },
@@ -103,7 +103,7 @@ namespace WebshopAPI.DAL
                     Wifi = true,
                     SizeStandard = MotherboardSizeStandardEnum.EATX,
                     CPUSocketType = CPUSocketEnum.LGA1700,
-                    MemorySocketType = "DDR5",
+                    MemorySocketType = RAMSocketTypeEnum.DDR5,
                     MaxMemorySize = 128,
                     NumberOfMemorySockets = 4,
                 }

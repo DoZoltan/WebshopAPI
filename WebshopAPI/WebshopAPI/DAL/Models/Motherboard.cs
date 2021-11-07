@@ -12,7 +12,7 @@ namespace WebshopAPI.DAL.Models
         public bool Wifi { get; set; }
         public MotherboardSizeStandardEnum SizeStandard { get; set; }
         public CPUSocketEnum CPUSocketType { get; set; }
-        public string MemorySocketType { get; set; }
+        public RAMSocketTypeEnum MemorySocketType { get; set; }
         public int MaxMemorySize { get; set; }
         public int NumberOfMemorySockets { get; set; }
     }

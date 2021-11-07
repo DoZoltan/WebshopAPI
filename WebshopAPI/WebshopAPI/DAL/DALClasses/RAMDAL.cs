@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebshopAPI.DAL.DALInterfaces;
 using WebshopAPI.DAL.Models;
+using WebshopAPI.Enums;
 
 namespace WebshopAPI.DAL.DALClasses
 {
@@ -18,7 +19,7 @@ namespace WebshopAPI.DAL.DALClasses
             _context = context;
         }
 
-        public async Task<IEnumerable<RAM>> GetCompatibleMemoriesByMotherboardMemorySocket(string MemorySocket)
+        public async Task<IEnumerable<RAM>> GetCompatibleMemoriesByMotherboardMemorySocket(RAMSocketTypeEnum MemorySocket)
         {
             return await _context.RAMs.Where(memory => memory.SocketType == MemorySocket).ToListAsync();
         }

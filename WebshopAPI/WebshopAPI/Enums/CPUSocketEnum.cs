@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebshopAPI.Enums
 {
-    public enum AMDCPUSocketEnum
+    public enum CPUSocketEnum
     {
         AM2 = 1,
         AM2Plus = 2,
@@ -21,5 +21,18 @@ namespace WebshopAPI.Enums
         SP3 = 12,
         TR4 = 13,
         sTRX4 = 14,
+        LGA1366 = 15,
+        LGA1156 = 16,
+        LGA1567 = 17,
+        LGA1155 = 18,
+        LGA2011 = 19,
+        LGA1356 = 20,
+        LGA1150 = 21,
+        LGA2011v3 = 22,
+        LGA1151 = 23,
+        LGA3647 = 24,
+        LGA2066 = 25,
+        LGA1200 = 26,
+        LGA1700 = 27,
     }
 }

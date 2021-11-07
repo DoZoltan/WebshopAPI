@@ -46,8 +46,8 @@ namespace WebshopAPI.DAL.Migrations
                     b.Property<int>("SellPrice")
                         .HasColumnType("int");
 
-                    b.Property<string>("SocketType")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("SocketType")
+                        .HasColumnType("int");
 
                     b.Property<int>("Speed")
                         .HasColumnType("int");
@@ -67,7 +67,7 @@ namespace WebshopAPI.DAL.Migrations
                             L3Cache = 24,
                             ProductName = "Test CPU 1",
                             SellPrice = 110,
-                            SocketType = "LGA 1700",
+                            SocketType = 27,
                             Speed = 3700
                         },
                         new
@@ -80,7 +80,7 @@ namespace WebshopAPI.DAL.Migrations
                             L3Cache = 32,
                             ProductName = "Test CPU 2",
                             SellPrice = 140,
-                            SocketType = "AM4",
+                            SocketType = 11,
                             Speed = 3900
                         });
                 });
@@ -98,8 +98,8 @@ namespace WebshopAPI.DAL.Migrations
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CPUSocketType")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CPUSocketType")
+                        .HasColumnType("int");
 
                     b.Property<string>("ImgURL")
                         .HasColumnType("nvarchar(max)");
@@ -138,7 +138,7 @@ namespace WebshopAPI.DAL.Migrations
                             ID = 1,
                             AcquisitionPrice = 80,
                             Brand = "ASUS",
-                            CPUSocketType = "AM4",
+                            CPUSocketType = 11,
                             ImgURL = "",
                             MaxMemorySize = 128,
                             MemorySocketType = "DDR4",
@@ -154,7 +154,7 @@ namespace WebshopAPI.DAL.Migrations
                             ID = 2,
                             AcquisitionPrice = 110,
                             Brand = "MSI",
-                            CPUSocketType = "LGA 1700",
+                            CPUSocketType = 27,
                             ImgURL = "",
                             MaxMemorySize = 128,
                             MemorySocketType = "DDR5",

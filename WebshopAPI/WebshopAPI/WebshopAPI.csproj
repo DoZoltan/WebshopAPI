@@ -17,8 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="BLL\Interfaces\" />
     <Folder Include="Controllers\" />
-    <Folder Include="BLL\" />
     <Folder Include="DAL\wwwroot\" />
   </ItemGroup>
 

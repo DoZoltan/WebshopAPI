@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebshopAPI.BLL.Interfaces;
+using WebshopAPI.DAL.DALInterfaces;
 using WebshopAPI.DAL.Models;
 using WebshopAPI.Enums;
 
@@ -10,14 +11,32 @@ namespace WebshopAPI.BLL.Classes
 {
     public class MotherboardBLL : BaseBLL<Motherboard>, IMotherboardBLL
     {
-        public Task<IEnumerable<Motherboard>> GetCompatibleMotherboardsByCPUSocket(CPUSocketEnum CPUSocket)
+        protected readonly IMotherboardDAL _motherboardDAL;
+
+        public MotherboardBLL(IMotherboardDAL motherboardDAL)
+            :base(motherboardDAL)
         {
-            throw new NotImplementedException();
+            _motherboardDAL = motherboardDAL;
         }
 
-        public Task<IEnumerable<Motherboard>> GetCompatibleMotherboardsByMemorySocket(RAMSocketTypeEnum MemorySocket)
+        public async Task<IEnumerable<Motherboard>> GetCompatibleMotherboardsByCPUSocket(CPUSocketEnum CPUSocket)
         {
-            throw new NotImplementedException();
+            if (Enum.IsDefined(typeof(CPUSocketEnum), CPUSocket))
+            {
+                return await _motherboardDAL.GetCompatibleMotherboardsByCPUSocket(CPUSocket);
+            }
+
+            return null;
+        }
+
+        public async Task<IEnumerable<Motherboard>> GetCompatibleMotherboardsByMemorySocket(RAMSocketTypeEnum MemorySocket)
+        {
+            if (Enum.IsDefined(typeof(RAMSocketTypeEnum), MemorySocket))
+            {
+                return await _motherboardDAL.GetCompatibleMotherboardsByMemorySocket(MemorySocket);
+            }
+
+            return null;
         }
     }
 }

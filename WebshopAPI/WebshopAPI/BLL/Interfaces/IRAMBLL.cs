@@ -9,6 +9,6 @@ namespace WebshopAPI.BLL.Interfaces
 {
     public interface IRAMBLL : IBaseBLL<RAM>
     {
-        Task<IEnumerable<RAM>> GetCompatibleMemoriesByMotherboardMemorySocket(RAMSocketTypeEnum MemorySocket);
+        Task<IEnumerable<RAM>> GetCompatibleMemoriesByMotherboardMemorySocket(RAMSocketTypeEnum memorySocket);
     }
 }

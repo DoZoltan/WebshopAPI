@@ -19,11 +19,11 @@ namespace WebshopAPI.BLL.Classes
             _RAMDAL = RAMDAL;
         }
 
-        public async Task<IEnumerable<RAM>> GetCompatibleMemoriesByMotherboardMemorySocket(RAMSocketTypeEnum MemorySocket)
+        public async Task<IEnumerable<RAM>> GetCompatibleMemoriesByMotherboardMemorySocket(RAMSocketTypeEnum memorySocket)
         {
-            if (Enum.IsDefined(typeof(RAMSocketTypeEnum), MemorySocket))
+            if (Enum.IsDefined(typeof(RAMSocketTypeEnum), memorySocket))
             {
-                return await _RAMDAL.GetCompatibleMemoriesByMotherboardMemorySocket(MemorySocket);
+                return await _RAMDAL.GetCompatibleMemoriesByMotherboardMemorySocket(memorySocket);
             }
 
             return null;

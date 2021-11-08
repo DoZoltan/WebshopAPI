@@ -11,7 +11,7 @@
 #### In this application you will be able to:
 - Register, modify and delete the own registration.
 - Find, filter and sort the products.
-- Add the products to your cart, and also delet from it.
+- Add the products to your cart, and also delete from it.
 - Create / add new products, if you have permissions for it.
 
 ## Used technologies

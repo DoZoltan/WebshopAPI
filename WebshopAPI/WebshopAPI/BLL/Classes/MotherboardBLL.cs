@@ -29,11 +29,11 @@ namespace WebshopAPI.BLL.Classes
             return null;
         }
 
-        public async Task<IEnumerable<Motherboard>> GetCompatibleMotherboardsByMemorySocket(RAMSocketTypeEnum MemorySocket)
+        public async Task<IEnumerable<Motherboard>> GetCompatibleMotherboardsByMemorySocket(RAMSocketTypeEnum memorySocket)
         {
-            if (Enum.IsDefined(typeof(RAMSocketTypeEnum), MemorySocket))
+            if (Enum.IsDefined(typeof(RAMSocketTypeEnum), memorySocket))
             {
-                return await _motherboardDAL.GetCompatibleMotherboardsByMemorySocket(MemorySocket);
+                return await _motherboardDAL.GetCompatibleMotherboardsByMemorySocket(memorySocket);
             }
 
             return null;

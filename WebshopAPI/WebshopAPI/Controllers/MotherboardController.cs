@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebshopAPI.BLL.Interfaces;
+using WebshopAPI.DAL.Models;
+using WebshopAPI.Enums;
 
 namespace WebshopAPI.Controllers
 {
@@ -17,6 +19,97 @@ namespace WebshopAPI.Controllers
         public MotherboardController(IMotherboardBLL motherboardBLL)
         {
             _motherboardBLL = motherboardBLL;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Get(int id)
+        {
+            var result = await _motherboardBLL.GetByID(id);
+
+            if (result != null)
+            {
+                return Ok(result);
+            }
+
+            return NotFound("No result");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await _motherboardBLL.GetAll();
+
+            if (result != null)
+            {
+                return Ok(result);
+            }
+
+            return NotFound("No result");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add([FromBody] Motherboard motherboard)
+        {
+            var result = await _motherboardBLL.AddNew(motherboard);
+
+            if (result != null)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest("Add new motherboard was failed");
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] Motherboard motherboard)
+        {
+            var result = await _motherboardBLL.Update(motherboard);
+
+            if (result != null)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest("Updating the motherboard was failed");
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _motherboardBLL.DeleteByID(id);
+
+            if (result != null)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest("Deleting the motherboard was failed");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetMotherboardsByCPU(CPUSocketEnum CPUSocket)
+        {
+            var result = await _motherboardBLL.GetCompatibleMotherboardsByCPUSocket(CPUSocket);
+
+            if (result != null)
+            {
+                return Ok(result);
+            }
+
+            return NotFound("No result");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetMotherboardsByMemory(RAMSocketTypeEnum memorySocket)
+        {
+            var result = await _motherboardBLL.GetCompatibleMotherboardsByMemorySocket(memorySocket);
+
+            if (result != null)
+            {
+                return Ok(result);
+            }
+
+            return NotFound("No result");
         }
     }
 }

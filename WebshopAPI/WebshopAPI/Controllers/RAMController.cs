@@ -21,7 +21,7 @@ namespace WebshopAPI.Controllers
             _RAMBLL = RAMBLL;
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             var result = await _RAMBLL.GetByID(id);
@@ -73,7 +73,7 @@ namespace WebshopAPI.Controllers
             return BadRequest("Updating the ram was failed");
         }
 
-        [HttpDelete]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _RAMBLL.DeleteByID(id);
@@ -86,10 +86,10 @@ namespace WebshopAPI.Controllers
             return BadRequest("Deleting the ram was failed");
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetMemoriesByMotherboard(RAMSocketTypeEnum memorySocket)
+        [HttpGet("socket/{socket}")]
+        public async Task<IActionResult> GetMemoriesBySocket(RAMSocketTypeEnum socket)
         {
-            var result = await _RAMBLL.GetCompatibleMemoriesByMotherboardMemorySocket(memorySocket);
+            var result = await _RAMBLL.GetCompatibleMemoriesByMotherboardMemorySocket(socket);
 
             if (result != null)
             {

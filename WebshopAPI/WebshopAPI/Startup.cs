@@ -12,7 +12,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebshopAPI.BLL.Interfaces;
 using WebshopAPI.DAL;
+using WebshopAPI.DAL.DALInterfaces;
 
 namespace WebshopAPI
 {
@@ -30,6 +32,15 @@ namespace WebshopAPI
         {
             services.AddDbContext<ShopContext>(options
                 => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            var allProviderTypes = System.Reflection.Assembly.GetAssembly(typeof(ICPUDAL))
+           .GetTypes().Where(t => t.Namespace != null).ToList();
+
+            foreach (var intfc in allProviderTypes.Where(t => t.IsInterface))
+            {
+                var impl = allProviderTypes.FirstOrDefault(c => c.IsClass && intfc.Name.Substring(1) == c.Name);
+                if (impl != null) services.AddScoped(intfc, impl);
+            }
 
             services.AddControllers();
         }

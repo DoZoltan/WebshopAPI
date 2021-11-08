@@ -21,7 +21,7 @@ namespace WebshopAPI.Controllers
             _motherboardBLL = motherboardBLL;
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             var result = await _motherboardBLL.GetByID(id);
@@ -73,7 +73,7 @@ namespace WebshopAPI.Controllers
             return BadRequest("Updating the motherboard was failed");
         }
 
-        [HttpDelete]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _motherboardBLL.DeleteByID(id);
@@ -86,10 +86,10 @@ namespace WebshopAPI.Controllers
             return BadRequest("Deleting the motherboard was failed");
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetMotherboardsByCPU(CPUSocketEnum CPUSocket)
+        [HttpGet("cpuSocket/{cpuSocket}")]
+        public async Task<IActionResult> GetMotherboardsByCPU(CPUSocketEnum cpuSocket)
         {
-            var result = await _motherboardBLL.GetCompatibleMotherboardsByCPUSocket(CPUSocket);
+            var result = await _motherboardBLL.GetCompatibleMotherboardsByCPUSocket(cpuSocket);
 
             if (result != null)
             {
@@ -99,7 +99,7 @@ namespace WebshopAPI.Controllers
             return NotFound("No result");
         }
 
-        [HttpGet]
+        [HttpGet("memorySocket/{memorySocket}")]
         public async Task<IActionResult> GetMotherboardsByMemory(RAMSocketTypeEnum memorySocket)
         {
             var result = await _motherboardBLL.GetCompatibleMotherboardsByMemorySocket(memorySocket);

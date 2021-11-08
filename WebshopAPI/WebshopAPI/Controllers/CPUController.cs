@@ -21,7 +21,7 @@ namespace WebshopAPI.Controllers
             _CPUBLL = CPUBLL;
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             var result = await _CPUBLL.GetByID(id);
@@ -73,7 +73,7 @@ namespace WebshopAPI.Controllers
             return BadRequest("Updating the CPU was failed");
         }
 
-        [HttpDelete]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _CPUBLL.DeleteByID(id);
@@ -86,10 +86,10 @@ namespace WebshopAPI.Controllers
             return BadRequest("Deleting the CPU was failed");
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetCPUsByMotherboard(CPUSocketEnum CPUSocket)
+        [HttpGet("socket/{socket}")]
+        public async Task<IActionResult> GetCPUsBySocket(CPUSocketEnum socket)
         {
-            var result = await _CPUBLL.GetCompatibleCPUsByMotherboardCPUSocket(CPUSocket);
+            var result = await _CPUBLL.GetCompatibleCPUsByMotherboardCPUSocket(socket);
 
             if (result != null)
             {

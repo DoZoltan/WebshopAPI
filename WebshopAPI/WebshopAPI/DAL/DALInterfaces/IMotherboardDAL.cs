@@ -9,7 +9,7 @@ namespace WebshopAPI.DAL.DALInterfaces
 {
     public interface IMotherboardDAL : IBaseDAL<Motherboard>
     {
-        Task<IEnumerable<Motherboard>> GetCompatibleMotherboardsByMemorySocket(RAMSocketTypeEnum MemorySocket);
-        Task<IEnumerable<Motherboard>> GetCompatibleMotherboardsByCPUSocket(CPUSocketEnum CPUSocket);
+        Task<IEnumerable<Motherboard>> GetMotherboardsByMemory(RamSocketTypeEnum memorySocket);
+        Task<IEnumerable<Motherboard>> GetMotherboardsByCPU(CpuSocketEnum cpuSocket);
     }
 }

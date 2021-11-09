@@ -19,14 +19,14 @@ namespace WebshopAPI.DAL.DALClasses
             _context = context;
         }
 
-        public async Task<IEnumerable<Motherboard>> GetCompatibleMotherboardsByCPUSocket(CPUSocketEnum CPUSocket)
+        public async Task<IEnumerable<Motherboard>> GetMotherboardsByCPU(CpuSocketEnum cpuSocket)
         {
-            return await _context.Motherboards.Where(moth => moth.CPUSocketType == CPUSocket).ToListAsync();
+            return await _context.Motherboards.Where(moth => moth.CpuSocketType == cpuSocket).ToListAsync();
         }
 
-        public async Task<IEnumerable<Motherboard>> GetCompatibleMotherboardsByMemorySocket(RAMSocketTypeEnum MemorySocket)
+        public async Task<IEnumerable<Motherboard>> GetMotherboardsByMemory(RamSocketTypeEnum memorySocket)
         {
-            return await _context.Motherboards.Where(moth => moth.MemorySocketType == MemorySocket).ToListAsync();
+            return await _context.Motherboards.Where(moth => moth.MemorySocketType == memorySocket).ToListAsync();
         }
     }
 }

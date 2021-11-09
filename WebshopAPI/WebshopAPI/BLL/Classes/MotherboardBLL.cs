@@ -19,21 +19,21 @@ namespace WebshopAPI.BLL.Classes
             _motherboardDAL = motherboardDAL;
         }
 
-        public async Task<IEnumerable<Motherboard>> GetCompatibleMotherboardsByCPUSocket(CPUSocketEnum CPUSocket)
+        public async Task<IEnumerable<Motherboard>> GetMotherboardsByCPU(CpuSocketEnum cpuSocket)
         {
-            if (Enum.IsDefined(typeof(CPUSocketEnum), CPUSocket))
+            if (Enum.IsDefined(typeof(CpuSocketEnum), cpuSocket))
             {
-                return await _motherboardDAL.GetCompatibleMotherboardsByCPUSocket(CPUSocket);
+                return await _motherboardDAL.GetMotherboardsByCPU(cpuSocket);
             }
 
             return null;
         }
 
-        public async Task<IEnumerable<Motherboard>> GetCompatibleMotherboardsByMemorySocket(RAMSocketTypeEnum memorySocket)
+        public async Task<IEnumerable<Motherboard>> GetMotherboardsByMemory(RamSocketTypeEnum memorySocket)
         {
-            if (Enum.IsDefined(typeof(RAMSocketTypeEnum), memorySocket))
+            if (Enum.IsDefined(typeof(RamSocketTypeEnum), memorySocket))
             {
-                return await _motherboardDAL.GetCompatibleMotherboardsByMemorySocket(memorySocket);
+                return await _motherboardDAL.GetMotherboardsByMemory(memorySocket);
             }
 
             return null;

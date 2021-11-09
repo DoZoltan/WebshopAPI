@@ -6,11 +6,11 @@ using WebshopAPI.Enums;
 
 namespace WebshopAPI.DAL.Models
 {
-    public class CPU : BaseProduct
+    public class Cpu : BaseProduct
     {
         public int CoreNumber { get; set; }
         public int L3Cache { get; set; }
         public int Speed { get; set; }
-        public CPUSocketEnum SocketType { get; set; }
+        public CpuSocketEnum SocketType { get; set; }
     }
 }

@@ -12,19 +12,19 @@ namespace WebshopAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RAMController : ControllerBase
+    public class RamController : ControllerBase
     {
-        protected readonly IRAMBLL _RAMBLL;
+        protected readonly IRamBLL _RamBLL;
 
-        public RAMController(IRAMBLL RAMBLL)
+        public RamController(IRamBLL RamBLL)
         {
-            _RAMBLL = RAMBLL;
+            _RamBLL = RamBLL;
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var result = await _RAMBLL.GetByID(id);
+            var result = await _RamBLL.GetByID(id);
 
             if (result != null)
             {
@@ -37,7 +37,7 @@ namespace WebshopAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _RAMBLL.GetAll();
+            var result = await _RamBLL.GetAll();
 
             if (result != null)
             {
@@ -48,9 +48,9 @@ namespace WebshopAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] RAM ram)
+        public async Task<IActionResult> Add([FromBody] Ram ram)
         {
-            var result = await _RAMBLL.AddNew(ram);
+            var result = await _RamBLL.AddNew(ram);
 
             if (result != null)
             {
@@ -61,9 +61,9 @@ namespace WebshopAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] RAM ram)
+        public async Task<IActionResult> Update([FromBody] Ram ram)
         {
-            var result = await _RAMBLL.Update(ram);
+            var result = await _RamBLL.Update(ram);
 
             if (result != null)
             {
@@ -76,7 +76,7 @@ namespace WebshopAPI.Controllers
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _RAMBLL.DeleteByID(id);
+            var result = await _RamBLL.DeleteByID(id);
 
             if (result != null)
             {
@@ -87,9 +87,9 @@ namespace WebshopAPI.Controllers
         }
 
         [HttpGet("socket/{socket}")]
-        public async Task<IActionResult> GetMemoriesBySocket(RAMSocketTypeEnum socket)
+        public async Task<IActionResult> GetMemoriesBySocket(RamSocketTypeEnum socket)
         {
-            var result = await _RAMBLL.GetCompatibleMemoriesByMotherboardMemorySocket(socket);
+            var result = await _RamBLL.GetMemoriesBySocket(socket);
 
             if (result != null)
             {

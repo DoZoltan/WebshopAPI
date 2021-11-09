@@ -7,8 +7,8 @@ using WebshopAPI.Enums;
 
 namespace WebshopAPI.BLL.Interfaces
 {
-    public interface ICPUBLL : IBaseBLL<CPU>
+    public interface ICpuBLL : IBaseBLL<Cpu>
     {
-        Task<IEnumerable<CPU>> GetCompatibleCPUsByMotherboardCPUSocket(CPUSocketEnum CPUSocket);
+        Task<IEnumerable<Cpu>> GetCpusBySocket(CpuSocketEnum socket);
     }
 }

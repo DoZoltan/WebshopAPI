@@ -9,19 +9,19 @@ using WebshopAPI.Enums;
 
 namespace WebshopAPI.DAL.DALClasses
 {
-    public class RAMDAL : BaseDAL<RAM>, IRAMDAL
+    public class RamDAL : BaseDAL<Ram>, IRamDAL
     {
         protected readonly ShopContext _context; 
 
-        public RAMDAL(ShopContext context)
+        public RamDAL(ShopContext context)
             :base(context)
         {
             _context = context;
         }
 
-        public async Task<IEnumerable<RAM>> GetCompatibleMemoriesByMotherboardMemorySocket(RAMSocketTypeEnum MemorySocket)
+        public async Task<IEnumerable<Ram>> GetMemoriesBySocket(RamSocketTypeEnum socket)
         {
-            return await _context.RAMs.Where(memory => memory.SocketType == MemorySocket).ToListAsync();
+            return await _context.Rams.Where(memory => memory.SocketType == socket).ToListAsync();
         }
     }
 }

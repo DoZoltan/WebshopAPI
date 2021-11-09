@@ -9,19 +9,19 @@ using WebshopAPI.Enums;
 
 namespace WebshopAPI.DAL.DALClasses
 {
-    public class CPUDAL : BaseDAL<CPU>, ICPUDAL
+    public class CpuDAL : BaseDAL<Cpu>, ICpuDAL
     {
         protected readonly ShopContext _context;
 
-        public CPUDAL(ShopContext context)
+        public CpuDAL(ShopContext context)
             : base(context)
         {
             _context = context;
         }
 
-        public async Task<IEnumerable<CPU>> GetCompatibleCPUsByMotherboardCPUSocket(CPUSocketEnum CPUSocket)
+        public async Task<IEnumerable<Cpu>> GetCpusBySocket(CpuSocketEnum socket)
         {
-            return await _context.CPUs.Where(cpu => cpu.SocketType == CPUSocket).ToListAsync();
+            return await _context.Cpus.Where(cpu => cpu.SocketType == socket).ToListAsync();
         }
     }
 }

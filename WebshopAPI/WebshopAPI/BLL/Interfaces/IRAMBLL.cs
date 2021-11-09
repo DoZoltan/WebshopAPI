@@ -7,8 +7,8 @@ using WebshopAPI.Enums;
 
 namespace WebshopAPI.BLL.Interfaces
 {
-    public interface IRAMBLL : IBaseBLL<RAM>
+    public interface IRamBLL : IBaseBLL<Ram>
     {
-        Task<IEnumerable<RAM>> GetCompatibleMemoriesByMotherboardMemorySocket(RAMSocketTypeEnum memorySocket);
+        Task<IEnumerable<Ram>> GetMemoriesBySocket(RamSocketTypeEnum socket);
     }
 }

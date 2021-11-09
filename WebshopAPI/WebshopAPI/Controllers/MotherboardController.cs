@@ -87,9 +87,9 @@ namespace WebshopAPI.Controllers
         }
 
         [HttpGet("cpuSocket/{cpuSocket}")]
-        public async Task<IActionResult> GetMotherboardsByCPU(CPUSocketEnum cpuSocket)
+        public async Task<IActionResult> GetMotherboardsByCPU(CpuSocketEnum cpuSocket)
         {
-            var result = await _motherboardBLL.GetCompatibleMotherboardsByCPUSocket(cpuSocket);
+            var result = await _motherboardBLL.GetMotherboardsByCPU(cpuSocket);
 
             if (result != null)
             {
@@ -100,9 +100,9 @@ namespace WebshopAPI.Controllers
         }
 
         [HttpGet("memorySocket/{memorySocket}")]
-        public async Task<IActionResult> GetMotherboardsByMemory(RAMSocketTypeEnum memorySocket)
+        public async Task<IActionResult> GetMotherboardsByMemory(RamSocketTypeEnum memorySocket)
         {
-            var result = await _motherboardBLL.GetCompatibleMotherboardsByMemorySocket(memorySocket);
+            var result = await _motherboardBLL.GetMotherboardsByMemory(memorySocket);
 
             if (result != null)
             {

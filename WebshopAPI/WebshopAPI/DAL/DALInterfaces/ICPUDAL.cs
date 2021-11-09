@@ -7,8 +7,8 @@ using WebshopAPI.Enums;
 
 namespace WebshopAPI.DAL.DALInterfaces
 {
-    public interface ICPUDAL : IBaseDAL<CPU>
+    public interface ICpuDAL : IBaseDAL<Cpu>
     {
-        Task<IEnumerable<CPU>> GetCompatibleCPUsByMotherboardCPUSocket(CPUSocketEnum CPUSocket);
+        Task<IEnumerable<Cpu>> GetCpusBySocket(CpuSocketEnum socket);
     }
 }

@@ -9,21 +9,21 @@ using WebshopAPI.Enums;
 
 namespace WebshopAPI.BLL.Classes
 {
-    public class RAMBLL : BaseBLL<RAM>, IRAMBLL
+    public class RamBLL : BaseBLL<Ram>, IRamBLL
     {
-        protected readonly IRAMDAL _RAMDAL;
+        protected readonly IRamDAL _RamDAL;
 
-        public RAMBLL(IRAMDAL RAMDAL)
-            :base(RAMDAL)
+        public RamBLL(IRamDAL RamDAL)
+            :base(RamDAL)
         {
-            _RAMDAL = RAMDAL;
+            _RamDAL = RamDAL;
         }
 
-        public async Task<IEnumerable<RAM>> GetCompatibleMemoriesByMotherboardMemorySocket(RAMSocketTypeEnum memorySocket)
+        public async Task<IEnumerable<Ram>> GetMemoriesBySocket(RamSocketTypeEnum socket)
         {
-            if (Enum.IsDefined(typeof(RAMSocketTypeEnum), memorySocket))
+            if (Enum.IsDefined(typeof(RamSocketTypeEnum), socket))
             {
-                return await _RAMDAL.GetCompatibleMemoriesByMotherboardMemorySocket(memorySocket);
+                return await _RamDAL.GetMemoriesBySocket(socket);
             }
 
             return null;

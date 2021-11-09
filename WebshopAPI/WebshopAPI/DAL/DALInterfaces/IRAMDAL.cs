@@ -7,8 +7,8 @@ using WebshopAPI.Enums;
 
 namespace WebshopAPI.DAL.DALInterfaces
 {
-    public interface IRAMDAL : IBaseDAL<RAM>
+    public interface IRamDAL : IBaseDAL<Ram>
     {
-        Task<IEnumerable<RAM>> GetCompatibleMemoriesByMotherboardMemorySocket(RAMSocketTypeEnum MemorySocket);
+        Task<IEnumerable<Ram>> GetMemoriesBySocket(RamSocketTypeEnum socket);
     }
 }

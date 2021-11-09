@@ -12,19 +12,19 @@ namespace WebshopAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CPUController : ControllerBase
+    public class CpuController : ControllerBase
     {
-        protected readonly ICPUBLL _CPUBLL;
+        protected readonly ICpuBLL _CpuBLL;
 
-        public CPUController(ICPUBLL CPUBLL)
+        public CpuController(ICpuBLL CpuBLL)
         {
-            _CPUBLL = CPUBLL;
+            _CpuBLL = CpuBLL;
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var result = await _CPUBLL.GetByID(id);
+            var result = await _CpuBLL.GetByID(id);
 
             if (result != null)
             {
@@ -37,7 +37,7 @@ namespace WebshopAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _CPUBLL.GetAll();
+            var result = await _CpuBLL.GetAll();
 
             if (result != null)
             {
@@ -48,9 +48,9 @@ namespace WebshopAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] CPU cpu)
+        public async Task<IActionResult> Add([FromBody] Cpu cpu)
         {
-            var result = await _CPUBLL.AddNew(cpu);
+            var result = await _CpuBLL.AddNew(cpu);
 
             if (result != null)
             {
@@ -61,9 +61,9 @@ namespace WebshopAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] CPU cpu)
+        public async Task<IActionResult> Update([FromBody] Cpu cpu)
         {
-            var result = await _CPUBLL.Update(cpu);
+            var result = await _CpuBLL.Update(cpu);
 
             if (result != null)
             {
@@ -76,7 +76,7 @@ namespace WebshopAPI.Controllers
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _CPUBLL.DeleteByID(id);
+            var result = await _CpuBLL.DeleteByID(id);
 
             if (result != null)
             {
@@ -87,9 +87,9 @@ namespace WebshopAPI.Controllers
         }
 
         [HttpGet("socket/{socket}")]
-        public async Task<IActionResult> GetCPUsBySocket(CPUSocketEnum socket)
+        public async Task<IActionResult> GetCpusBySocket(CpuSocketEnum socket)
         {
-            var result = await _CPUBLL.GetCompatibleCPUsByMotherboardCPUSocket(socket);
+            var result = await _CpuBLL.GetCpusBySocket(socket);
 
             if (result != null)
             {

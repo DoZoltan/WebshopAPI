@@ -14,8 +14,8 @@ namespace WebshopAPI.DAL
         {
         }
 
-        public DbSet<CPU> CPUs { get; set; }
-        public DbSet<RAM> RAMs { get; set; }
+        public DbSet<Cpu> Cpus { get; set; }
+        public DbSet<Ram> Rams { get; set; }
         public DbSet<Motherboard> Motherboards { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelbuilder)

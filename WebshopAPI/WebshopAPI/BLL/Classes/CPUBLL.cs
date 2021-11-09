@@ -9,21 +9,21 @@ using WebshopAPI.Enums;
 
 namespace WebshopAPI.BLL.Classes
 {
-    public class CPUBLL : BaseBLL<CPU>, ICPUBLL
+    public class CpuBLL : BaseBLL<Cpu>, ICpuBLL
     {
-        protected readonly ICPUDAL _CPUDAL;
+        protected readonly ICpuDAL _CpuDAL;
 
-        public CPUBLL(ICPUDAL CPUDAL)
-            :base(CPUDAL)
+        public CpuBLL(ICpuDAL CpuDAL)
+            :base(CpuDAL)
         {
-            _CPUDAL = CPUDAL;
+            _CpuDAL = CpuDAL;
         }
 
-        public async Task<IEnumerable<CPU>> GetCompatibleCPUsByMotherboardCPUSocket(CPUSocketEnum CPUSocket)
+        public async Task<IEnumerable<Cpu>> GetCpusBySocket(CpuSocketEnum socket)
         {
-            if (Enum.IsDefined(typeof(CPUSocketEnum), CPUSocket))
+            if (Enum.IsDefined(typeof(CpuSocketEnum), socket))
             {
-                return await _CPUDAL.GetCompatibleCPUsByMotherboardCPUSocket(CPUSocket);
+                return await _CpuDAL.GetCpusBySocket(socket);
             }
 
             return null;

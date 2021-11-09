@@ -13,8 +13,8 @@ namespace WebshopAPI.DAL
         //Extension metódus a ModelBuilder osztályhoz
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<CPU>().HasData(
-                new CPU
+            modelBuilder.Entity<Cpu>().HasData(
+                new Cpu
                 {
                     ID = 1,
                     ProductName = "Test CPU 1",
@@ -25,10 +25,10 @@ namespace WebshopAPI.DAL
                     CoreNumber = 8,
                     L3Cache = 24,
                     Speed = 3700,
-                    SocketType = CPUSocketEnum.LGA1700,
+                    SocketType = CpuSocketEnum.LGA1700,
                 },
 
-                new CPU
+                new Cpu
                 {
                     ID = 2,
                     ProductName = "Test CPU 2",
@@ -39,12 +39,12 @@ namespace WebshopAPI.DAL
                     CoreNumber = 12,
                     L3Cache = 32,
                     Speed = 3900,
-                    SocketType = CPUSocketEnum.AM4,
+                    SocketType = CpuSocketEnum.AM4,
                 }
             );
 
-            modelBuilder.Entity<RAM>().HasData(
-                new RAM
+            modelBuilder.Entity<Ram>().HasData(
+                new Ram
                 {
                     ID = 1,
                     ProductName = "Test RAM 1",
@@ -55,10 +55,10 @@ namespace WebshopAPI.DAL
                     Gb = 32,
                     Delay = 8,
                     Speed = 4200,
-                    SocketType = RAMSocketTypeEnum.DDR4,
+                    SocketType = RamSocketTypeEnum.DDR4,
                 },
 
-                new RAM
+                new Ram
                 {
                     ID = 2,
                     ProductName = "Test RAM 2",
@@ -69,7 +69,7 @@ namespace WebshopAPI.DAL
                     Gb = 64,
                     Delay = 12,
                     Speed = 6700,
-                    SocketType = RAMSocketTypeEnum.DDR5,
+                    SocketType = RamSocketTypeEnum.DDR5,
                 }
             );
 
@@ -85,8 +85,8 @@ namespace WebshopAPI.DAL
                     Usb3Amount = 8,
                     Wifi = true,
                     SizeStandard = MotherboardSizeStandardEnum.ATX,
-                    CPUSocketType = CPUSocketEnum.AM4,
-                    MemorySocketType = RAMSocketTypeEnum.DDR4,
+                    CpuSocketType = CpuSocketEnum.AM4,
+                    MemorySocketType = RamSocketTypeEnum.DDR4,
                     MaxMemorySize = 128,
                     NumberOfMemorySockets = 4,
                 },
@@ -102,8 +102,8 @@ namespace WebshopAPI.DAL
                     Usb3Amount = 6,
                     Wifi = true,
                     SizeStandard = MotherboardSizeStandardEnum.EATX,
-                    CPUSocketType = CPUSocketEnum.LGA1700,
-                    MemorySocketType = RAMSocketTypeEnum.DDR5,
+                    CpuSocketType = CpuSocketEnum.LGA1700,
+                    MemorySocketType = RamSocketTypeEnum.DDR5,
                     MaxMemorySize = 128,
                     NumberOfMemorySockets = 4,
                 }

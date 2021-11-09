@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebshopAPI.Enums
 {
-    public enum RAMSocketTypeEnum
+    public enum RamSocketTypeEnum
     {
         SDRAM = 1,
         DDR1 = 1,

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace WebshopAPI.Enums
+﻿namespace WebshopAPI.Enums
 {
-    public enum CPUSocketEnum
+    public enum CpuSocketEnum
     {
         AM2 = 1,
         AM2Plus = 2,

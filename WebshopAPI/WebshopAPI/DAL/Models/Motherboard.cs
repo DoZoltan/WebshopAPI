@@ -11,8 +11,8 @@ namespace WebshopAPI.DAL.Models
         public int Usb3Amount { get; set; }
         public bool Wifi { get; set; }
         public MotherboardSizeStandardEnum SizeStandard { get; set; }
-        public CPUSocketEnum CPUSocketType { get; set; }
-        public RAMSocketTypeEnum MemorySocketType { get; set; }
+        public CpuSocketEnum CpuSocketType { get; set; }
+        public RamSocketTypeEnum MemorySocketType { get; set; }
         public int MaxMemorySize { get; set; }
         public int NumberOfMemorySockets { get; set; }
     }

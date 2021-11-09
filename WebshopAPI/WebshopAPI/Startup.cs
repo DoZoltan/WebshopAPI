@@ -33,7 +33,7 @@ namespace WebshopAPI
             services.AddDbContext<ShopContext>(options
                 => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            var allProviderTypes = System.Reflection.Assembly.GetAssembly(typeof(ICPUDAL))
+            var allProviderTypes = System.Reflection.Assembly.GetAssembly(typeof(ICpuDAL))
            .GetTypes().Where(t => t.Namespace != null).ToList();
 
             foreach (var intfc in allProviderTypes.Where(t => t.IsInterface))

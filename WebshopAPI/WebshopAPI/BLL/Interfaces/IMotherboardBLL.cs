@@ -9,7 +9,7 @@ namespace WebshopAPI.BLL.Interfaces
 {
     public interface IMotherboardBLL : IBaseBLL<Motherboard>
     {
-        Task<IEnumerable<Motherboard>> GetMotherboardsByMemory(RamSocketTypeEnum memorySocket);
+        Task<IEnumerable<Motherboard>> GetMotherboardsByMemory(RamSocketEnum memorySocket);
         Task<IEnumerable<Motherboard>> GetMotherboardsByCPU(CpuSocketEnum cpuSocket);
     }
 }

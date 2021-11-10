@@ -24,7 +24,7 @@ namespace WebshopAPI.DAL.DALClasses
             return await _context.Motherboards.Where(moth => moth.CpuSocketType == cpuSocket).ToListAsync();
         }
 
-        public async Task<IEnumerable<Motherboard>> GetMotherboardsByMemory(RamSocketTypeEnum memorySocket)
+        public async Task<IEnumerable<Motherboard>> GetMotherboardsByMemory(RamSocketEnum memorySocket)
         {
             return await _context.Motherboards.Where(moth => moth.MemorySocketType == memorySocket).ToListAsync();
         }

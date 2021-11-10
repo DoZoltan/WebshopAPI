@@ -18,6 +18,6 @@ namespace WebshopAPI.DAL.Models
         public int Speed { get; set; }
         [Required]
         [RamSocketValidator]
-        public RamSocketTypeEnum SocketType { get; set; }
+        public RamSocketEnum SocketType { get; set; }
     }
 }

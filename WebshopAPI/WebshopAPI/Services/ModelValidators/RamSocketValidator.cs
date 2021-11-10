@@ -14,7 +14,7 @@ namespace WebshopAPI.Services.ModelValidators
         {
             var obj = validationContext.ObjectType;
 
-            if (obj != null && Enum.IsDefined(typeof(RamSocketTypeEnum), value))
+            if (obj != null && Enum.IsDefined(typeof(RamSocketEnum), value))
             {
                 return ValidationResult.Success;
             }

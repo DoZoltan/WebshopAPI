@@ -19,7 +19,7 @@ namespace WebshopAPI.DAL.DALClasses
             _context = context;
         }
 
-        public async Task<IEnumerable<Ram>> GetMemoriesBySocket(RamSocketTypeEnum socket)
+        public async Task<IEnumerable<Ram>> GetMemoriesBySocket(RamSocketEnum socket)
         {
             return await _context.Rams.Where(memory => memory.SocketType == socket).ToListAsync();
         }

@@ -87,7 +87,7 @@ namespace WebshopAPI.Controllers
         }
 
         [HttpGet("socket/{socket}")]
-        public async Task<IActionResult> GetMemoriesBySocket(RamSocketTypeEnum socket)
+        public async Task<IActionResult> GetMemoriesBySocket(RamSocketEnum socket)
         {
             var result = await _RamBLL.GetMemoriesBySocket(socket);
 

@@ -9,6 +9,6 @@ namespace WebshopAPI.BLL.Interfaces
 {
     public interface IRamBLL : IBaseBLL<Ram>
     {
-        Task<IEnumerable<Ram>> GetMemoriesBySocket(RamSocketTypeEnum socket);
+        Task<IEnumerable<Ram>> GetMemoriesBySocket(RamSocketEnum socket);
     }
 }

@@ -22,7 +22,7 @@ namespace WebshopAPI.DAL.Models
         public CpuSocketEnum CpuSocketType { get; set; }
         [Required]
         [RamSocketValidator]
-        public RamSocketTypeEnum MemorySocketType { get; set; }
+        public RamSocketEnum MemorySocketType { get; set; }
         [Required]
         public int MaxMemorySize { get; set; }
         [Required]

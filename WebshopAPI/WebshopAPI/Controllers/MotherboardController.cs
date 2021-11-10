@@ -100,7 +100,7 @@ namespace WebshopAPI.Controllers
         }
 
         [HttpGet("memorySocket/{memorySocket}")]
-        public async Task<IActionResult> GetMotherboardsByMemory(RamSocketTypeEnum memorySocket)
+        public async Task<IActionResult> GetMotherboardsByMemory(RamSocketEnum memorySocket)
         {
             var result = await _motherboardBLL.GetMotherboardsByMemory(memorySocket);
 

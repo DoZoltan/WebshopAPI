@@ -19,9 +19,9 @@ namespace WebshopAPI.BLL.Classes
             _RamDAL = RamDAL;
         }
 
-        public async Task<IEnumerable<Ram>> GetMemoriesBySocket(RamSocketTypeEnum socket)
+        public async Task<IEnumerable<Ram>> GetMemoriesBySocket(RamSocketEnum socket)
         {
-            if (Enum.IsDefined(typeof(RamSocketTypeEnum), socket))
+            if (Enum.IsDefined(typeof(RamSocketEnum), socket))
             {
                 return await _RamDAL.GetMemoriesBySocket(socket);
             }

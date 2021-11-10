@@ -9,6 +9,6 @@ namespace WebshopAPI.DAL.DALInterfaces
 {
     public interface IRamDAL : IBaseDAL<Ram>
     {
-        Task<IEnumerable<Ram>> GetMemoriesBySocket(RamSocketTypeEnum socket);
+        Task<IEnumerable<Ram>> GetMemoriesBySocket(RamSocketEnum socket);
     }
 }

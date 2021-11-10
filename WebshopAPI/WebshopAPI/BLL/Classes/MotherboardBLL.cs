@@ -29,9 +29,9 @@ namespace WebshopAPI.BLL.Classes
             return null;
         }
 
-        public async Task<IEnumerable<Motherboard>> GetMotherboardsByMemory(RamSocketTypeEnum memorySocket)
+        public async Task<IEnumerable<Motherboard>> GetMotherboardsByMemory(RamSocketEnum memorySocket)
         {
-            if (Enum.IsDefined(typeof(RamSocketTypeEnum), memorySocket))
+            if (Enum.IsDefined(typeof(RamSocketEnum), memorySocket))
             {
                 return await _motherboardDAL.GetMotherboardsByMemory(memorySocket);
             }

@@ -30,6 +30,18 @@ namespace WebshopAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "Access-Control-Allow-Origin",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200")
+                                .WithMethods("PUT", "DELETE", "GET", "POST")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                    });
+            });
+
             services.AddDbContext<ShopContext>(options
                 => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -56,6 +68,8 @@ namespace WebshopAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("Access-Control-Allow-Origin");
 
             app.UseAuthorization();
 

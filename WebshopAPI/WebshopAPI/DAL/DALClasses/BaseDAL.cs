@@ -62,6 +62,7 @@ namespace WebshopAPI.DAL.DALClasses
             return await _context.Set<T>().FirstOrDefaultAsync(prod => prod.ID == id);
         }
 
+
         public async Task<T> Update(T product)
         {
             try
@@ -76,5 +77,16 @@ namespace WebshopAPI.DAL.DALClasses
 
             return await GetByID(product.ID);
         }
+
+        public async Task<IEnumerable<T>> SearchByBrand(string brandPart)
+        {
+            return await _context.Set<T>().Where(prod => prod.Brand.Contains(brandPart)).ToListAsync();
+        }
+
+        public async Task<IEnumerable<T>> SearchByProductName(string namePart)
+        {
+            return await _context.Set<T>().Where(prod => prod.ProductName.Contains(namePart)).ToListAsync();
+        }
+        
     }
 }

@@ -5,7 +5,7 @@
 ## Project description
 #### This is a ASP.Net Core WEB API server, what will provide data to a webshop application.
 #### It contains the business logic layer and the database.
-#### The frontend project is still in the planning phase.
+#### You can find the frontend part here: https://github.com/DoZoltan/WebshopAngular
 
 ## Features and aims of the whole project (frontend + backend)
 #### In this application you will be able to:

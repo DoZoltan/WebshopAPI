@@ -12,5 +12,7 @@ namespace WebshopAPI.DAL.DALInterfaces
         Task<T> Delete(T product);
         Task<T> AddNew(T product);
         Task<T> Update(T product);
+        Task<IEnumerable<T>> SearchByProductName(string namePart);
+        Task<IEnumerable<T>> SearchByBrand(string brandPart);
     }
 }

@@ -24,12 +24,12 @@ namespace WebshopAPI.Controllers
         {
             var result = await _SearchBLL.SearchByBrand(brandPart);
 
-            if (result != null)
+            if (result != null && result.Any())
             {
                 return Ok(result);
             }
 
-            return NotFound("No result");
+            return NoContent();
         }
 
         [HttpGet("name/{namePart}")]
@@ -37,12 +37,12 @@ namespace WebshopAPI.Controllers
         {
             var result = await _SearchBLL.SearchByProductName(namePart);
 
-            if (result != null)
+            if (result != null && result.Any())
             {
                 return Ok(result);
             }
 
-            return NotFound("No result");
+            return NoContent();
         }
     }
 }

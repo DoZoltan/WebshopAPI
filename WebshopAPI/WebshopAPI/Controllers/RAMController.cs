@@ -48,14 +48,10 @@ namespace WebshopAPI.Controllers
 
             if (result != null)
             {
-                //return Created($"api/ram/{result.ID}", result);
-                //CreatedAtAction(nameof(Get), new { id = result.id }, result) --> így a header location-ben látható lesz a route, amin keresztül elérhető
-                //  a létrehozott termékünk
-                return Ok(result);
+                return CreatedAtAction(nameof(Get), new { id = result.ID }, result);
             }
 
-            //ha null paramétert kapunk, akkor mehet a badrequest (itt ellenőrizzük??)
-            return BadRequest("Adding a new ram was failed");
+            return BadRequest("Faulty product data");
         }
 
         //itt érdemes az id-t is várni

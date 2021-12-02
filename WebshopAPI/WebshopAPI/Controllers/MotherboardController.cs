@@ -61,7 +61,7 @@ namespace WebshopAPI.Controllers
                 return BadRequest("Invalid product ID");
             }
 
-            if (await _motherboardBLL.GetByID(motherboard.ID) is null)
+            if (await _motherboardBLL.GetByID(motherboard.ID) == null)
             {
                 return NotFound($"There is no product with ID: {id}");
             }
@@ -81,7 +81,7 @@ namespace WebshopAPI.Controllers
         {
             var ramToDelete = await _motherboardBLL.GetByID(id);
 
-            if (ramToDelete is null)
+            if (ramToDelete == null)
             {
                 return NotFound($"There is no product with ID: {id}");
             }

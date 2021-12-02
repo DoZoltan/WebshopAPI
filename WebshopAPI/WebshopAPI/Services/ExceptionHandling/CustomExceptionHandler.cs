@@ -19,7 +19,7 @@ namespace WebshopAPI.Services.ExceptionHandling
                     context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                     context.Response.ContentType = "application/json";
                     var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
-                    if (contextFeature is not null)
+                    if (contextFeature != null)
                     {
                         await context.Response.WriteAsync($"{context.Response.StatusCode} - Internal Server Error. Please Try Again Later");
                     }

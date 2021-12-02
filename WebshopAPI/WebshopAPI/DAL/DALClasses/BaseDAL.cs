@@ -21,33 +21,20 @@ namespace WebshopAPI.DAL.DALClasses
 
         public async Task<T> AddNew(T product)
         {
-            try
-            {
-                // A T típusátol függően legyen a megfelelő DbSet<> kiválasztva a context osztályban
-                // majd azon legyen végrehalytva a művelet
-                _context.Set<T>().Add(product);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                return null;
-            }
+            // A T típusátol függően legyen a megfelelő DbSet<> kiválasztva a context osztályban
+            // majd azon legyen végrehalytva a művelet
+            _context.Set<T>().Add(product); //addasync, visszatérési értéke is van, amiből a hozzáadott entity-t ki lehet nyerni result.Entity
+            await _context.SaveChangesAsync();
 
+            //return result.Entity
             var lastId = await _context.Set<T>().MaxAsync(prod => prod.ID);
             return await GetByID(lastId);
         }
 
         public async Task<T> Delete(T product)
         {
-            try
-            {
-                _context.Set<T>().Remove(product);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                return null;
-            }
+            _context.Set<T>().Remove(product);
+            await _context.SaveChangesAsync();
 
             return product;
         }
@@ -62,18 +49,10 @@ namespace WebshopAPI.DAL.DALClasses
             return await _context.Set<T>().FirstOrDefaultAsync(prod => prod.ID == id);
         }
 
-
         public async Task<T> Update(T product)
         {
-            try
-            {
-                _context.Set<T>().Update(product);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                return null;
-            }
+            _context.Set<T>().Update(product);
+            await _context.SaveChangesAsync();
 
             return await GetByID(product.ID);
         }
@@ -87,6 +66,9 @@ namespace WebshopAPI.DAL.DALClasses
         {
             return await _context.Set<T>().Where(prod => prod.ProductName.Contains(namePart)).ToListAsync();
         }
-        
+
+        //kombinálva
+        // return await _context.Set<T>().Where(prod => prod.ProductName.Contains(inputPart) || prod.Brand.Contains(inputPart)).ToListAsync();
+
     }
 }

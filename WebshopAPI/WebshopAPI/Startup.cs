@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using WebshopAPI.BLL.Interfaces;
 using WebshopAPI.DAL;
 using WebshopAPI.DAL.DALInterfaces;
+using WebshopAPI.Services.ExceptionHandling;
 
 namespace WebshopAPI
 {
@@ -70,6 +71,8 @@ namespace WebshopAPI
             app.UseRouting();
 
             app.UseCors("Access-Control-Allow-Origin");
+
+            app.UseCustomExceptionHandler();
 
             app.UseAuthorization();
 

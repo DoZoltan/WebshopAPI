@@ -57,8 +57,15 @@ namespace WebshopAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromBody] Ram ram, int id)
         {
-            //csekkolni, h az id és a termék.id eggyezik-e
-            //csekkolni, h létezik-e ilyen id-val termék a DB-be (ha nem, akkor nincs mit update-elni)
+            if (ram.ID != id)
+            {
+                return BadRequest("Invalid product ID");
+            }
+
+            if (await _RamBLL.GetByID(ram.ID) is null)
+            {
+                return NotFound("The product to be upgraded is not exists");
+            }
 
             var result = await _RamBLL.Update(ram);
 
@@ -67,17 +74,7 @@ namespace WebshopAPI.Controllers
                 return Ok(result);
             }
 
-            // BadRequest-et akkor kéne, ha az érkező adat érvénytelen, ezt a BLL-ben ellenőrizzni kell (most csak a null van)
-            return BadRequest("Updating the ram was failed");
-
-            //Conflict -- mikor?
-            //return Conflict();
-
-            // a 400 (BadRequest) helyett lehetne ezt is
-            //return UnprocessableEntity(); //422
-
-            // szerver oldali hiba esetén, pl. exception-öknél 500-as hibákat kellene
-            //return StatusCode(StatusCodes.Status500InternalServerError);
+            return UnprocessableEntity("Faulty product data");
         }
 
         [HttpDelete("delete/{id}")]

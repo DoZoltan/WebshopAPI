@@ -21,14 +21,10 @@ namespace WebshopAPI.DAL.DALClasses
 
         public async Task<T> AddNew(T product)
         {
-            // A T típusátol függően legyen a megfelelő DbSet<> kiválasztva a context osztályban
-            // majd azon legyen végrehalytva a művelet
-            _context.Set<T>().Add(product); //addasync, visszatérési értéke is van, amiből a hozzáadott entity-t ki lehet nyerni result.Entity
+            var result = await _context.Set<T>().AddAsync(product);
             await _context.SaveChangesAsync();
 
-            //return result.Entity
-            var lastId = await _context.Set<T>().MaxAsync(prod => prod.ID);
-            return await GetByID(lastId);
+            return result.Entity;
         }
 
         public async Task<T> Delete(T product)

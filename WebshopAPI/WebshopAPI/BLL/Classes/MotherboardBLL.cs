@@ -21,12 +21,7 @@ namespace WebshopAPI.BLL.Classes
 
         public async Task<IEnumerable<Motherboard>> GetMotherboardsByCPU(CpuSocketEnum cpuSocket)
         {
-            if (Enum.IsDefined(typeof(CpuSocketEnum), cpuSocket))
-            {
-                return await _motherboardDAL.GetMotherboardsByCPU(cpuSocket);
-            }
-
-            return null;
+            return await _motherboardDAL.GetMotherboardsByCPU(cpuSocket);
         }
 
         public async Task<IEnumerable<Motherboard>> GetMotherboardsByMemory(RamSocketEnum memorySocket)

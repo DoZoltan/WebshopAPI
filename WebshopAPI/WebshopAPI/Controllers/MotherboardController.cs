@@ -92,14 +92,12 @@ namespace WebshopAPI.Controllers
         [HttpGet("cpuSocket/{cpuSocket}")]
         public async Task<IActionResult> GetMotherboardsByCPU(CpuSocketEnum cpuSocket)
         {
-            var result = await _motherboardBLL.GetMotherboardsByCPU(cpuSocket);
-
-            if (result != null)
+            if (Enum.IsDefined(typeof(CpuSocketEnum), cpuSocket))
             {
-                return Ok(result);
+                return NotFound($"The ({cpuSocket}) socket type is not exist");
             }
 
-            return NoContent();
+            return Ok(await _motherboardBLL.GetMotherboardsByCPU(cpuSocket));
         }
 
         [HttpGet("memorySocket/{memorySocket}")]

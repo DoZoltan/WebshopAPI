@@ -31,20 +31,13 @@ namespace WebshopAPI.Controllers
                 return Ok(result);
             }
 
-            return NotFound("No result");
+            return NotFound($"There is no product with ID: {id}");
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _CpuBLL.GetAll();
-
-            if (result != null)
-            {
-                return Ok(result);
-            }
-
-            return NotFound("No result");
+            return Ok(await _CpuBLL.GetAll());
         }
 
         [HttpPost]
@@ -57,7 +50,7 @@ namespace WebshopAPI.Controllers
                 return Ok(result);
             }
 
-            return BadRequest("Add new CPU was failed");
+            return BadRequest("Adding a new CPU was failed");
         }
 
         [HttpPut]
@@ -76,14 +69,14 @@ namespace WebshopAPI.Controllers
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _CpuBLL.DeleteByID(id);
+            var ramToDelete = await _CpuBLL.GetByID(id);
 
-            if (result != null)
+            if (ramToDelete is null)
             {
-                return Ok(result);
+                return NotFound($"There is no product with ID: {id}");
             }
 
-            return BadRequest("Deleting the CPU was failed");
+            return Ok(await _CpuBLL.Delete(ramToDelete));
         }
 
         [HttpGet("socket/{socket}")]
@@ -96,7 +89,7 @@ namespace WebshopAPI.Controllers
                 return Ok(result);
             }
 
-            return NotFound("No result");
+            return NoContent();
         }
     }
 }

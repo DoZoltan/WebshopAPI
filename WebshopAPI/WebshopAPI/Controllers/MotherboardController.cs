@@ -31,20 +31,13 @@ namespace WebshopAPI.Controllers
                 return Ok(result);
             }
 
-            return NotFound("No result");
+            return NotFound($"There is no product with ID: {id}");
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _motherboardBLL.GetAll();
-
-            if (result != null)
-            {
-                return Ok(result);
-            }
-
-            return NotFound("No result");
+            return Ok(await _motherboardBLL.GetAll());
         }
 
         [HttpPost]
@@ -57,9 +50,11 @@ namespace WebshopAPI.Controllers
                 return Ok(result);
             }
 
-            return BadRequest("Add new motherboard was failed");
+            return BadRequest("Adding a new motherboard was failed");
         }
 
+        // érdemes lehet list / array-t várni, vagy azt is egy külön route.on, ha több mindent is frissíteni kellene
+        // továbbá, ha egy entitásnak csak egy részét akarjuk frissíteni, akkor inkább a PATCH metódus legyen használva
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] Motherboard motherboard)
         {
@@ -76,14 +71,14 @@ namespace WebshopAPI.Controllers
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _motherboardBLL.DeleteByID(id);
+            var ramToDelete = await _motherboardBLL.GetByID(id);
 
-            if (result != null)
+            if (ramToDelete is null)
             {
-                return Ok(result);
+                return NotFound($"There is no product with ID: {id}");
             }
 
-            return BadRequest("Deleting the motherboard was failed");
+            return Ok(await _motherboardBLL.Delete(ramToDelete));
         }
 
         [HttpGet("cpuSocket/{cpuSocket}")]
@@ -96,7 +91,7 @@ namespace WebshopAPI.Controllers
                 return Ok(result);
             }
 
-            return NotFound("No result");
+            return NoContent();
         }
 
         [HttpGet("memorySocket/{memorySocket}")]
@@ -109,7 +104,7 @@ namespace WebshopAPI.Controllers
                 return Ok(result);
             }
 
-            return NotFound("No result");
+            return NoContent();
         }
     }
 }

@@ -29,10 +29,10 @@ namespace WebshopAPI.DAL.DALClasses
 
         public async Task<T> Delete(T product)
         {
-            _context.Set<T>().Remove(product);
+            var result = _context.Set<T>().Remove(product);
             await _context.SaveChangesAsync();
 
-            return product;
+            return result.Entity;
         }
 
         public async Task<IEnumerable<T>> GetAll()
@@ -47,10 +47,10 @@ namespace WebshopAPI.DAL.DALClasses
 
         public async Task<T> Update(T product)
         {
-            _context.Set<T>().Update(product);
+            var result = _context.Set<T>().Update(product);
             await _context.SaveChangesAsync();
 
-            return await GetByID(product.ID);
+            return result.Entity;
         }
 
         public async Task<IEnumerable<T>> SearchByBrand(string brandPart)

@@ -21,12 +21,7 @@ namespace WebshopAPI.BLL.Classes
 
         public async Task<IEnumerable<Ram>> GetMemoriesBySocket(RamSocketEnum socket)
         {
-            if (Enum.IsDefined(typeof(RamSocketEnum), socket))
-            {
-                return await _RamDAL.GetMemoriesBySocket(socket);
-            }
-
-            return null;
+            return await _RamDAL.GetMemoriesBySocket(socket);
         }
     }
 }

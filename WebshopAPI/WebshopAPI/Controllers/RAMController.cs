@@ -93,14 +93,12 @@ namespace WebshopAPI.Controllers
         [HttpGet("socket/{socket}")]
         public async Task<IActionResult> GetMemoriesBySocket(RamSocketEnum socket)
         {
-            var result = await _RamBLL.GetMemoriesBySocket(socket);
-
-            if (result != null)
+            if (Enum.IsDefined(typeof(RamSocketEnum), socket))
             {
-                return Ok(result);
+                return NotFound($"The ({socket}) socket type is not exist");
             }
 
-            return NoContent();
+            return Ok(await _RamBLL.GetMemoriesBySocket(socket));    
         }
     }
 }

@@ -64,7 +64,7 @@ namespace WebshopAPI.Controllers
 
             if (await _RamBLL.GetByID(ram.ID) is null)
             {
-                return NotFound("The product to be upgraded is not exists");
+                return NotFound($"There is no product with ID: {id}");
             }
 
             var result = await _RamBLL.Update(ram);
@@ -80,18 +80,14 @@ namespace WebshopAPI.Controllers
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            // DTO használata? két esetben is lehet null az eredmény, a BLL-ben, ha nincs ilyen id-val termék, vagy a DAL-ban, egy db exception miatt
-            // a DTO tartalmazná, h hol lett null + a terméket, ha sikerült a törlés, és a http kód ezektől függne
+            var ramToDelete = await _RamBLL.GetByID(id);
 
-            //erre nem kell a DTO, simán itt legyen a try-ctach
-            var result = await _RamBLL.DeleteByID(id);
-
-            if (result != null)
+            if (ramToDelete is null)
             {
-                return Ok(result);
+                return NotFound($"There is no product with ID: {id}");
             }
 
-            return NotFound($"There is no product with ID: {id}");
+            return Ok(await _RamBLL.Delete(ramToDelete));
         }
 
         [HttpGet("socket/{socket}")]

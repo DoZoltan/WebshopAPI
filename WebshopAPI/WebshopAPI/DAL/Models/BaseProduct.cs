@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using WebshopAPI.Enums;
+using WebshopAPI.Services.ModelValidators;
 
 namespace WebshopAPI.DAL.Models
 {
@@ -20,6 +21,7 @@ namespace WebshopAPI.DAL.Models
         [Required]
         public int SellPrice { get; set; }
         [Required]
+        [ProductTypeValidator]
         public ProductTypeEnum ProductType { get; set; }
     }
 }

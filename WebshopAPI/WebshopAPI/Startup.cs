@@ -44,7 +44,7 @@ namespace WebshopAPI
             });
 
             services.AddDbContext<ShopContext>(options
-                => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 
             var allProviderTypes = System.Reflection.Assembly.GetAssembly(typeof(ICpuDAL))
            .GetTypes().Where(t => t.Namespace != null).ToList();

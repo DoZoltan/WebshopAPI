@@ -103,14 +103,12 @@ namespace WebshopAPI.Controllers
         [HttpGet("memorySocket/{memorySocket}")]
         public async Task<IActionResult> GetMotherboardsByMemory(RamSocketEnum memorySocket)
         {
-            var result = await _motherboardBLL.GetMotherboardsByMemory(memorySocket);
-
-            if (result != null)
+            if (Enum.IsDefined(typeof(RamSocketEnum), memorySocket))
             {
-                return Ok(result);
+                return NotFound($"The ({memorySocket}) socket type is not exist");
             }
 
-            return NoContent();
+            return Ok(await _motherboardBLL.GetMotherboardsByMemory(memorySocket));
         }
     }
 }

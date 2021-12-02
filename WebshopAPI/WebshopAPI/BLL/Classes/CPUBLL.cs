@@ -21,12 +21,7 @@ namespace WebshopAPI.BLL.Classes
 
         public async Task<IEnumerable<Cpu>> GetCpusBySocket(CpuSocketEnum socket)
         {
-            if (Enum.IsDefined(typeof(CpuSocketEnum), socket))
-            {
-                return await _CpuDAL.GetCpusBySocket(socket);
-            }
-
-            return null;
+            return await _CpuDAL.GetCpusBySocket(socket);
         }
     }
 }

@@ -92,14 +92,12 @@ namespace WebshopAPI.Controllers
         [HttpGet("socket/{socket}")]
         public async Task<IActionResult> GetCpusBySocket(CpuSocketEnum socket)
         {
-            var result = await _CpuBLL.GetCpusBySocket(socket);
-
-            if (result != null)
+            if (Enum.IsDefined(typeof(CpuSocketEnum), socket))
             {
-                return Ok(result);
+                return NotFound($"The ({socket}) socket type is not exist");
             }
 
-            return NoContent();
+            return Ok(await _CpuBLL.GetCpusBySocket(socket));
         }
     }
 }

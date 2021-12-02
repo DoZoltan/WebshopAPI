@@ -47,10 +47,10 @@ namespace WebshopAPI.Controllers
 
             if (result != null)
             {
-                return Ok(result);
+                return CreatedAtAction(nameof(Get), new { id = result.ID }, result);
             }
 
-            return BadRequest("Adding a new CPU was failed");
+            return UnprocessableEntity("Faulty product data");
         }
 
         [HttpPut]

@@ -51,12 +51,11 @@ namespace WebshopAPI.Controllers
                 return CreatedAtAction(nameof(Get), new { id = result.ID }, result);
             }
 
-            return BadRequest("Faulty product data");
+            return UnprocessableEntity("Faulty product data");
         }
 
-        //itt érdemes az id-t is várni
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Ram ram)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromBody] Ram ram, int id)
         {
             //csekkolni, h az id és a termék.id eggyezik-e
             //csekkolni, h létezik-e ilyen id-val termék a DB-be (ha nem, akkor nincs mit update-elni)

@@ -53,11 +53,19 @@ namespace WebshopAPI.Controllers
             return UnprocessableEntity("Faulty product data");
         }
 
-        // érdemes lehet list / array-t várni, vagy azt is egy külön route.on, ha több mindent is frissíteni kellene
-        // továbbá, ha egy entitásnak csak egy részét akarjuk frissíteni, akkor inkább a PATCH metódus legyen használva
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Motherboard motherboard)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromBody] Motherboard motherboard, int id)
         {
+            if (motherboard.ID != id)
+            {
+                return BadRequest("Invalid product ID");
+            }
+
+            if (await _motherboardBLL.GetByID(motherboard.ID) is null)
+            {
+                return NotFound($"There is no product with ID: {id}");
+            }
+
             var result = await _motherboardBLL.Update(motherboard);
 
             if (result != null)
@@ -65,7 +73,7 @@ namespace WebshopAPI.Controllers
                 return Ok(result);
             }
 
-            return BadRequest("Updating the motherboard was failed");
+            return UnprocessableEntity("Faulty product data");
         }
 
         [HttpDelete("delete/{id}")]

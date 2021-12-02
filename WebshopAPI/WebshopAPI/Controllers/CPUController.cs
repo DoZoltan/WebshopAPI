@@ -53,9 +53,19 @@ namespace WebshopAPI.Controllers
             return UnprocessableEntity("Faulty product data");
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Cpu cpu)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromBody] Cpu cpu, int id)
         {
+            if (cpu.ID != id)
+            {
+                return BadRequest("Invalid product ID");
+            }
+
+            if (await _CpuBLL.GetByID(cpu.ID) is null)
+            {
+                return NotFound($"There is no product with ID: {id}");
+            }
+
             var result = await _CpuBLL.Update(cpu);
 
             if (result != null)
@@ -63,7 +73,7 @@ namespace WebshopAPI.Controllers
                 return Ok(result);
             }
 
-            return BadRequest("Updating the CPU was failed");
+            return UnprocessableEntity("Faulty product data");
         }
 
         [HttpDelete("delete/{id}")]

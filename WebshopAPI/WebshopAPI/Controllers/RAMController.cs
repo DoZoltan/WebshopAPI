@@ -31,20 +31,14 @@ namespace WebshopAPI.Controllers
                 return Ok(result);
             }
 
-            return NotFound("No result");
+            // a response üzeneteket ki lehet szervezni egy osztályba, így nem kell mindenoh átirogatni módosítás esetén
+            return NotFound($"There is no product with ID: {id}");
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _RamBLL.GetAll();
-
-            if (result != null)
-            {
-                return Ok(result);
-            }
-
-            return NotFound("No result");
+            return Ok(await _RamBLL.GetAll());
         }
 
         [HttpPost]
@@ -54,15 +48,23 @@ namespace WebshopAPI.Controllers
 
             if (result != null)
             {
+                //return Created($"api/ram/{result.ID}", result);
+                //CreatedAtAction(nameof(Get), new { id = result.id }, result) --> így a header location-ben látható lesz a route, amin keresztül elérhető
+                //  a létrehozott termékünk
                 return Ok(result);
             }
 
-            return BadRequest("Add new ram was failed");
+            //ha null paramétert kapunk, akkor mehet a badrequest (itt ellenőrizzük??)
+            return BadRequest("Adding a new ram was failed");
         }
 
+        //itt érdemes az id-t is várni
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] Ram ram)
         {
+            //csekkolni, h az id és a termék.id eggyezik-e
+            //csekkolni, h létezik-e ilyen id-val termék a DB-be (ha nem, akkor nincs mit update-elni)
+
             var result = await _RamBLL.Update(ram);
 
             if (result != null)
@@ -70,12 +72,26 @@ namespace WebshopAPI.Controllers
                 return Ok(result);
             }
 
+            // BadRequest-et akkor kéne, ha az érkező adat érvénytelen, ezt a BLL-ben ellenőrizzni kell (most csak a null van)
             return BadRequest("Updating the ram was failed");
+
+            //Conflict -- mikor?
+            //return Conflict();
+
+            // a 400 (BadRequest) helyett lehetne ezt is
+            //return UnprocessableEntity(); //422
+
+            // szerver oldali hiba esetén, pl. exception-öknél 500-as hibákat kellene
+            //return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
+            // DTO használata? két esetben is lehet null az eredmény, a BLL-ben, ha nincs ilyen id-val termék, vagy a DAL-ban, egy db exception miatt
+            // a DTO tartalmazná, h hol lett null + a terméket, ha sikerült a törlés, és a http kód ezektől függne
+
+            //erre nem kell a DTO, simán itt legyen a try-ctach
             var result = await _RamBLL.DeleteByID(id);
 
             if (result != null)
@@ -83,7 +99,7 @@ namespace WebshopAPI.Controllers
                 return Ok(result);
             }
 
-            return BadRequest("Deleting the ram was failed");
+            return NotFound($"There is no product with ID: {id}");
         }
 
         [HttpGet("socket/{socket}")]
@@ -96,7 +112,7 @@ namespace WebshopAPI.Controllers
                 return Ok(result);
             }
 
-            return NotFound("No result");
+            return NoContent();
         }
     }
 }

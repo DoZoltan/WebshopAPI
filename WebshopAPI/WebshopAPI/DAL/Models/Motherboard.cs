@@ -10,22 +10,19 @@ namespace WebshopAPI.DAL.Models
 {
     public class Motherboard : BaseProduct
     {
-        [Required]
+        [Range(1, 99)]
         public int Usb3Amount { get; set; }
         [Required]
         public bool Wifi { get; set; }
-        [Required]
         [SizeStandardValidator]
         public MotherboardSizeStandardEnum SizeStandard { get; set; }
-        [Required]
         [CpuSocketValidator]
         public CpuSocketEnum CpuSocketType { get; set; }
-        [Required]
         [RamSocketValidator]
         public RamSocketEnum MemorySocketType { get; set; }
-        [Required]
+        [Range(1, 99999)]
         public int MaxMemorySize { get; set; }
-        [Required]
+        [Range(1, 99)]
         public int NumberOfMemorySockets { get; set; }
     }
 }

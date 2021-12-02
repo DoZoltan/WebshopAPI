@@ -10,13 +10,12 @@ namespace WebshopAPI.DAL.Models
 {
     public class Cpu : BaseProduct
     {
-        [Required]
+        [Range(1, 999)]
         public int CoreNumber { get; set; }
-        [Required]
+        [Range(1, 999)]
         public int L3Cache { get; set; }
-        [Required]
+        [Range(1, 99999)]
         public int Speed { get; set; }
-        [Required]
         [CpuSocketValidator]
         public CpuSocketEnum SocketType { get; set; }
     }

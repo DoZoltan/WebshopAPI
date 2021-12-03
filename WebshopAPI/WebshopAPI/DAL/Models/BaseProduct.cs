@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 using WebshopAPI.Enums;
+using WebshopAPI.Services.ModelValidators;
 
 namespace WebshopAPI.DAL.Models
 {
@@ -15,11 +13,11 @@ namespace WebshopAPI.DAL.Models
         [Required]
         public string Brand { get; set; }
         public string ImgURL { get; set; }
-        [Required]
+        [Range(1, 99999)]
         public int AcquisitionPrice { get; set; }
-        [Required]
+        [Range(1, 99999)]
         public int SellPrice { get; set; }
-        [Required]
+        [ProductTypeValidator]
         public ProductTypeEnum ProductType { get; set; }
     }
 }

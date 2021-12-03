@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebshopAPI.BLL.Interfaces;
 using WebshopAPI.DAL.DALInterfaces;
@@ -21,22 +19,12 @@ namespace WebshopAPI.BLL.Classes
 
         public async Task<IEnumerable<Motherboard>> GetMotherboardsByCPU(CpuSocketEnum cpuSocket)
         {
-            if (Enum.IsDefined(typeof(CpuSocketEnum), cpuSocket))
-            {
-                return await _motherboardDAL.GetMotherboardsByCPU(cpuSocket);
-            }
-
-            return null;
+            return await _motherboardDAL.GetMotherboardsByCPU(cpuSocket);
         }
 
         public async Task<IEnumerable<Motherboard>> GetMotherboardsByMemory(RamSocketEnum memorySocket)
         {
-            if (Enum.IsDefined(typeof(RamSocketEnum), memorySocket))
-            {
-                return await _motherboardDAL.GetMotherboardsByMemory(memorySocket);
-            }
-
-            return null;
+            return await _motherboardDAL.GetMotherboardsByMemory(memorySocket);
         }
     }
 }

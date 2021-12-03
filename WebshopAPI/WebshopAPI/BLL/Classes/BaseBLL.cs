@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebshopAPI.BLL.Interfaces;
 using WebshopAPI.DAL.DALInterfaces;
@@ -27,16 +25,9 @@ namespace WebshopAPI.BLL.Classes
             return null;
         }
 
-        public async Task<T> DeleteByID(int id)
+        public async Task<T> Delete(T product)
         {
-            var product = await GetByID(id);
-
-            if (product != null)
-            {
-                return await _baseDAL.Delete(product);
-            }
-
-            return null;
+            return await _baseDAL.Delete(product);
         }
 
         public async Task<IEnumerable<T>> GetAll()

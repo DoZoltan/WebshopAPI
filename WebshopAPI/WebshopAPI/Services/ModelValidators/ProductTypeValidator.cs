@@ -4,18 +4,18 @@ using WebshopAPI.Enums;
 
 namespace WebshopAPI.Services.ModelValidators
 {
-    public class SizeStandardValidator : ValidationAttribute
+    public class ProductTypeValidator : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var obj = validationContext.ObjectType;
 
-            if (obj != null && Enum.IsDefined(typeof(MotherboardSizeStandardEnum), value))
+            if (obj != null && Enum.IsDefined(typeof(ProductTypeEnum), value))
             {
                 return ValidationResult.Success;
             }
 
-            return new ValidationResult("Motherboard size standard is invalid");
+            return new ValidationResult("Product type is invalid");
         }
     }
 }

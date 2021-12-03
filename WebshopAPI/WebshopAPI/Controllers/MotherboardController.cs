@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WebshopAPI.BLL.Interfaces;
 using WebshopAPI.DAL.Models;
 using WebshopAPI.Enums;
+using WebshopAPI.Services.ResponseMessenger;
 
 namespace WebshopAPI.Controllers
 {
@@ -15,10 +13,12 @@ namespace WebshopAPI.Controllers
     public class MotherboardController : ControllerBase
     {
         protected readonly IMotherboardBLL _motherboardBLL;
+        protected readonly IResponseMessenger _ResponseMessenger;
 
-        public MotherboardController(IMotherboardBLL motherboardBLL)
+        public MotherboardController(IMotherboardBLL motherboardBLL, IResponseMessenger ResponseMessenger)
         {
             _motherboardBLL = motherboardBLL;
+            _ResponseMessenger = ResponseMessenger;
         }
 
         [HttpGet("{id}")]
@@ -31,20 +31,13 @@ namespace WebshopAPI.Controllers
                 return Ok(result);
             }
 
-            return NotFound("No result");
+            return NotFound(_ResponseMessenger.SendProductIdNotFoundMessage(typeof(Motherboard).Name, id));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _motherboardBLL.GetAll();
-
-            if (result != null)
-            {
-                return Ok(result);
-            }
-
-            return NotFound("No result");
+            return Ok(await _motherboardBLL.GetAll());
         }
 
         [HttpPost]
@@ -54,15 +47,25 @@ namespace WebshopAPI.Controllers
 
             if (result != null)
             {
-                return Ok(result);
+                return CreatedAtAction(nameof(Get), new { id = result.ID }, result);
             }
 
-            return BadRequest("Add new motherboard was failed");
+            return UnprocessableEntity(_ResponseMessenger.SendWrongProductDataMessage());
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Motherboard motherboard)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromBody] Motherboard motherboard, int id)
         {
+            if (motherboard.ID != id)
+            {
+                return BadRequest(_ResponseMessenger.SendWrongProductIdMessage(typeof(Motherboard).Name, motherboard.ID, id));
+            }
+
+            if (await _motherboardBLL.GetByID(motherboard.ID) == null)
+            {
+                return NotFound(_ResponseMessenger.SendProductIdNotFoundMessage(typeof(Motherboard).Name, id));
+            }
+
             var result = await _motherboardBLL.Update(motherboard);
 
             if (result != null)
@@ -70,46 +73,42 @@ namespace WebshopAPI.Controllers
                 return Ok(result);
             }
 
-            return BadRequest("Updating the motherboard was failed");
+            return UnprocessableEntity(_ResponseMessenger.SendWrongProductDataMessage());
         }
 
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _motherboardBLL.DeleteByID(id);
+            var ramToDelete = await _motherboardBLL.GetByID(id);
 
-            if (result != null)
+            if (ramToDelete == null)
             {
-                return Ok(result);
+                return NotFound(_ResponseMessenger.SendProductIdNotFoundMessage(typeof(Motherboard).Name, id));
             }
 
-            return BadRequest("Deleting the motherboard was failed");
+            return Ok(await _motherboardBLL.Delete(ramToDelete));
         }
 
         [HttpGet("cpuSocket/{cpuSocket}")]
         public async Task<IActionResult> GetMotherboardsByCPU(CpuSocketEnum cpuSocket)
         {
-            var result = await _motherboardBLL.GetMotherboardsByCPU(cpuSocket);
-
-            if (result != null)
+            if (Enum.IsDefined(typeof(CpuSocketEnum), cpuSocket))
             {
-                return Ok(result);
+                return NotFound(_ResponseMessenger.SendWrongSocketTypeMessage(((int)cpuSocket)));
             }
 
-            return NotFound("No result");
+            return Ok(await _motherboardBLL.GetMotherboardsByCPU(cpuSocket));
         }
 
         [HttpGet("memorySocket/{memorySocket}")]
         public async Task<IActionResult> GetMotherboardsByMemory(RamSocketEnum memorySocket)
         {
-            var result = await _motherboardBLL.GetMotherboardsByMemory(memorySocket);
-
-            if (result != null)
+            if (Enum.IsDefined(typeof(RamSocketEnum), memorySocket))
             {
-                return Ok(result);
+                return NotFound(_ResponseMessenger.SendWrongSocketTypeMessage(((int)memorySocket)));
             }
 
-            return NotFound("No result");
+            return Ok(await _motherboardBLL.GetMotherboardsByMemory(memorySocket));
         }
     }
 }

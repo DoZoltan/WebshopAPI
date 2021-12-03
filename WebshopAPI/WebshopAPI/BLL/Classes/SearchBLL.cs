@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebshopAPI.BLL.Interfaces;
 using WebshopAPI.DAL.DALInterfaces;
@@ -21,24 +19,33 @@ namespace WebshopAPI.BLL.Classes
             _MotherboardDAL = MotherboardDAL;
         }
 
+        // DTO használata, itt nincs szükség a válaszban minden adatra az adott termékről
+        // Admin keresésnél pedig még kevesebb adat kell
+
         public async Task<IEnumerable<BaseProduct>> SearchByBrand(string brandPart)
         {
-            List<BaseProduct> results = new List<BaseProduct>();
-
-            results.AddRange(await _CpuDAL.SearchByBrand(brandPart));
-            results.AddRange(await _RamDAL.SearchByBrand(brandPart));
-            results.AddRange(await _MotherboardDAL.SearchByBrand(brandPart));
+            List<BaseProduct> results = new();
+            
+            if (!string.IsNullOrEmpty(brandPart))
+            {
+                results.AddRange(await _CpuDAL.SearchByBrand(brandPart));
+                results.AddRange(await _RamDAL.SearchByBrand(brandPart));
+                results.AddRange(await _MotherboardDAL.SearchByBrand(brandPart));
+            }
 
             return results;
         }
 
         public async Task<IEnumerable<BaseProduct>> SearchByProductName(string namePart)
         {
-            List<BaseProduct> results = new List<BaseProduct>();
+            List<BaseProduct> results = new();
 
-            results.AddRange(await _CpuDAL.SearchByProductName(namePart));
-            results.AddRange(await _RamDAL.SearchByProductName(namePart));
-            results.AddRange(await _MotherboardDAL.SearchByProductName(namePart));
+            if (!string.IsNullOrEmpty(namePart))
+            {
+                results.AddRange(await _CpuDAL.SearchByProductName(namePart));
+                results.AddRange(await _RamDAL.SearchByProductName(namePart));
+                results.AddRange(await _MotherboardDAL.SearchByProductName(namePart));
+            }
 
             return results;
         }

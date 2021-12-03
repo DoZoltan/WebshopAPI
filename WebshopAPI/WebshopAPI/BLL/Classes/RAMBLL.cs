@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebshopAPI.BLL.Interfaces;
 using WebshopAPI.DAL.DALInterfaces;
@@ -21,12 +19,7 @@ namespace WebshopAPI.BLL.Classes
 
         public async Task<IEnumerable<Ram>> GetMemoriesBySocket(RamSocketEnum socket)
         {
-            if (Enum.IsDefined(typeof(RamSocketEnum), socket))
-            {
-                return await _RamDAL.GetMemoriesBySocket(socket);
-            }
-
-            return null;
+            return await _RamDAL.GetMemoriesBySocket(socket);
         }
     }
 }

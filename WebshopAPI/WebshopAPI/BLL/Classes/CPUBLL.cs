@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebshopAPI.BLL.Interfaces;
 using WebshopAPI.DAL.DALInterfaces;
@@ -21,12 +19,7 @@ namespace WebshopAPI.BLL.Classes
 
         public async Task<IEnumerable<Cpu>> GetCpusBySocket(CpuSocketEnum socket)
         {
-            if (Enum.IsDefined(typeof(CpuSocketEnum), socket))
-            {
-                return await _CpuDAL.GetCpusBySocket(socket);
-            }
-
-            return null;
+            return await _CpuDAL.GetCpusBySocket(socket);
         }
     }
 }

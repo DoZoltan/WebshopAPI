@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WebshopAPI.BLL.Interfaces;
 using WebshopAPI.DAL.Models;
 using WebshopAPI.Enums;
+using WebshopAPI.Services.ResponseMessenger;
 
 namespace WebshopAPI.Controllers
 {
@@ -15,10 +13,12 @@ namespace WebshopAPI.Controllers
     public class RamController : ControllerBase
     {
         protected readonly IRamBLL _RamBLL;
+        protected readonly IResponseMessenger _ResponseMessenger;
 
-        public RamController(IRamBLL RamBLL)
+        public RamController(IRamBLL RamBLL, IResponseMessenger ResponseMessenger)
         {
             _RamBLL = RamBLL;
+            _ResponseMessenger = ResponseMessenger;
         }
 
         [HttpGet("{id}")]
@@ -31,20 +31,13 @@ namespace WebshopAPI.Controllers
                 return Ok(result);
             }
 
-            return NotFound("No result");
+            return NotFound(_ResponseMessenger.SendProductIdNotFoundMessage(typeof(Ram).Name, id));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _RamBLL.GetAll();
-
-            if (result != null)
-            {
-                return Ok(result);
-            }
-
-            return NotFound("No result");
+            return Ok(await _RamBLL.GetAll());
         }
 
         [HttpPost]
@@ -54,15 +47,25 @@ namespace WebshopAPI.Controllers
 
             if (result != null)
             {
-                return Ok(result);
+                return CreatedAtAction(nameof(Get), new { id = result.ID }, result);
             }
 
-            return BadRequest("Add new ram was failed");
+            return UnprocessableEntity(_ResponseMessenger.SendWrongProductDataMessage());
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Ram ram)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromBody] Ram ram, int id)
         {
+            if (ram.ID != id)
+            {
+                return BadRequest(_ResponseMessenger.SendWrongProductIdMessage(typeof(Ram).Name, ram.ID, id));
+            }
+
+            if (await _RamBLL.GetByID(ram.ID) == null)
+            {
+                return NotFound(_ResponseMessenger.SendProductIdNotFoundMessage(typeof(Ram).Name, id));
+            }
+
             var result = await _RamBLL.Update(ram);
 
             if (result != null)
@@ -70,33 +73,31 @@ namespace WebshopAPI.Controllers
                 return Ok(result);
             }
 
-            return BadRequest("Updating the ram was failed");
+            return UnprocessableEntity(_ResponseMessenger.SendWrongProductDataMessage());
         }
 
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _RamBLL.DeleteByID(id);
+            var ramToDelete = await _RamBLL.GetByID(id);
 
-            if (result != null)
+            if (ramToDelete == null)
             {
-                return Ok(result);
+                return NotFound(_ResponseMessenger.SendProductIdNotFoundMessage(typeof(Ram).Name, id));
             }
 
-            return BadRequest("Deleting the ram was failed");
+            return Ok(await _RamBLL.Delete(ramToDelete));
         }
 
         [HttpGet("socket/{socket}")]
         public async Task<IActionResult> GetMemoriesBySocket(RamSocketEnum socket)
         {
-            var result = await _RamBLL.GetMemoriesBySocket(socket);
-
-            if (result != null)
+            if (Enum.IsDefined(typeof(RamSocketEnum), socket))
             {
-                return Ok(result);
+                return NotFound(_ResponseMessenger.SendWrongSocketTypeMessage(((int)socket)));
             }
 
-            return NotFound("No result");
+            return Ok(await _RamBLL.GetMemoriesBySocket(socket));
         }
     }
 }

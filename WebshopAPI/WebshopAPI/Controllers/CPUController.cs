@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WebshopAPI.BLL.Interfaces;
 using WebshopAPI.DAL.Models;
 using WebshopAPI.Enums;
+using WebshopAPI.Services.ResponseMessenger;
 
 namespace WebshopAPI.Controllers
 {
@@ -15,10 +13,12 @@ namespace WebshopAPI.Controllers
     public class CpuController : ControllerBase
     {
         protected readonly ICpuBLL _CpuBLL;
+        protected readonly IResponseMessenger _ResponseMessenger;
 
-        public CpuController(ICpuBLL CpuBLL)
+        public CpuController(ICpuBLL CpuBLL, IResponseMessenger ResponseMessenger)
         {
             _CpuBLL = CpuBLL;
+            _ResponseMessenger = ResponseMessenger;
         }
 
         [HttpGet("{id}")]
@@ -31,20 +31,13 @@ namespace WebshopAPI.Controllers
                 return Ok(result);
             }
 
-            return NotFound("No result");
+            return NotFound(_ResponseMessenger.SendProductIdNotFoundMessage(typeof(Cpu).Name, id));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _CpuBLL.GetAll();
-
-            if (result != null)
-            {
-                return Ok(result);
-            }
-
-            return NotFound("No result");
+            return Ok(await _CpuBLL.GetAll());
         }
 
         [HttpPost]
@@ -54,15 +47,25 @@ namespace WebshopAPI.Controllers
 
             if (result != null)
             {
-                return Ok(result);
+                return CreatedAtAction(nameof(Get), new { id = result.ID }, result);
             }
 
-            return BadRequest("Add new CPU was failed");
+            return UnprocessableEntity(_ResponseMessenger.SendWrongProductDataMessage());
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Cpu cpu)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromBody] Cpu cpu, int id)
         {
+            if (cpu.ID != id)
+            {
+                return BadRequest(_ResponseMessenger.SendWrongProductIdMessage(typeof(Cpu).Name, cpu.ID, id));
+            }
+
+            if (await _CpuBLL.GetByID(cpu.ID) == null)
+            {
+                return NotFound(_ResponseMessenger.SendProductIdNotFoundMessage(typeof(Cpu).Name, id));
+            }
+
             var result = await _CpuBLL.Update(cpu);
 
             if (result != null)
@@ -70,33 +73,31 @@ namespace WebshopAPI.Controllers
                 return Ok(result);
             }
 
-            return BadRequest("Updating the CPU was failed");
+            return UnprocessableEntity(_ResponseMessenger.SendWrongProductDataMessage());
         }
 
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _CpuBLL.DeleteByID(id);
+            var ramToDelete = await _CpuBLL.GetByID(id);
 
-            if (result != null)
+            if (ramToDelete == null)
             {
-                return Ok(result);
+                return NotFound(_ResponseMessenger.SendProductIdNotFoundMessage(typeof(Cpu).Name, id));
             }
 
-            return BadRequest("Deleting the CPU was failed");
+            return Ok(await _CpuBLL.Delete(ramToDelete));
         }
 
         [HttpGet("socket/{socket}")]
         public async Task<IActionResult> GetCpusBySocket(CpuSocketEnum socket)
         {
-            var result = await _CpuBLL.GetCpusBySocket(socket);
-
-            if (result != null)
+            if (Enum.IsDefined(typeof(CpuSocketEnum), socket))
             {
-                return Ok(result);
+                return NotFound(_ResponseMessenger.SendWrongSocketTypeMessage(((int)socket)));
             }
 
-            return NotFound("No result");
+            return Ok(await _CpuBLL.GetCpusBySocket(socket));
         }
     }
 }

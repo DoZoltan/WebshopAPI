@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using WebshopAPI.BLL.Interfaces;
 using WebshopAPI.DAL.Models;
 using WebshopAPI.Enums;
+using WebshopAPI.Services.ResponseMessenger;
 
 namespace WebshopAPI.Controllers
 {
@@ -12,10 +13,12 @@ namespace WebshopAPI.Controllers
     public class MotherboardController : ControllerBase
     {
         protected readonly IMotherboardBLL _motherboardBLL;
+        protected readonly IResponseMessenger _ResponseMessenger;
 
-        public MotherboardController(IMotherboardBLL motherboardBLL)
+        public MotherboardController(IMotherboardBLL motherboardBLL, IResponseMessenger ResponseMessenger)
         {
             _motherboardBLL = motherboardBLL;
+            _ResponseMessenger = ResponseMessenger;
         }
 
         [HttpGet("{id}")]
@@ -28,7 +31,7 @@ namespace WebshopAPI.Controllers
                 return Ok(result);
             }
 
-            return NotFound($"There is no product with ID: {id}");
+            return NotFound(_ResponseMessenger.SendProductIdNotFoundMessage(typeof(Motherboard).Name, id));
         }
 
         [HttpGet]
@@ -47,7 +50,7 @@ namespace WebshopAPI.Controllers
                 return CreatedAtAction(nameof(Get), new { id = result.ID }, result);
             }
 
-            return UnprocessableEntity("Faulty product data");
+            return UnprocessableEntity(_ResponseMessenger.SendWrongProductDataMessage());
         }
 
         [HttpPut("{id}")]
@@ -55,12 +58,12 @@ namespace WebshopAPI.Controllers
         {
             if (motherboard.ID != id)
             {
-                return BadRequest("Invalid product ID");
+                return BadRequest(_ResponseMessenger.SendWrongProductIdMessage(typeof(Motherboard).Name, motherboard.ID, id));
             }
 
             if (await _motherboardBLL.GetByID(motherboard.ID) == null)
             {
-                return NotFound($"There is no product with ID: {id}");
+                return NotFound(_ResponseMessenger.SendProductIdNotFoundMessage(typeof(Motherboard).Name, id));
             }
 
             var result = await _motherboardBLL.Update(motherboard);
@@ -70,7 +73,7 @@ namespace WebshopAPI.Controllers
                 return Ok(result);
             }
 
-            return UnprocessableEntity("Faulty product data");
+            return UnprocessableEntity(_ResponseMessenger.SendWrongProductDataMessage());
         }
 
         [HttpDelete("delete/{id}")]
@@ -80,7 +83,7 @@ namespace WebshopAPI.Controllers
 
             if (ramToDelete == null)
             {
-                return NotFound($"There is no product with ID: {id}");
+                return NotFound(_ResponseMessenger.SendProductIdNotFoundMessage(typeof(Motherboard).Name, id));
             }
 
             return Ok(await _motherboardBLL.Delete(ramToDelete));
@@ -91,7 +94,7 @@ namespace WebshopAPI.Controllers
         {
             if (Enum.IsDefined(typeof(CpuSocketEnum), cpuSocket))
             {
-                return NotFound($"The ({cpuSocket}) socket type is not exist");
+                return NotFound(_ResponseMessenger.SendWrongSocketTypeMessage(((int)cpuSocket)));
             }
 
             return Ok(await _motherboardBLL.GetMotherboardsByCPU(cpuSocket));
@@ -102,7 +105,7 @@ namespace WebshopAPI.Controllers
         {
             if (Enum.IsDefined(typeof(RamSocketEnum), memorySocket))
             {
-                return NotFound($"The ({memorySocket}) socket type is not exist");
+                return NotFound(_ResponseMessenger.SendWrongSocketTypeMessage(((int)memorySocket)));
             }
 
             return Ok(await _motherboardBLL.GetMotherboardsByMemory(memorySocket));

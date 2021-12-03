@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using WebshopAPI.BLL.Interfaces;
 using WebshopAPI.DAL.Models;
 using WebshopAPI.Enums;
+using WebshopAPI.Services.ResponseMessenger;
 
 namespace WebshopAPI.Controllers
 {
@@ -12,10 +13,12 @@ namespace WebshopAPI.Controllers
     public class RamController : ControllerBase
     {
         protected readonly IRamBLL _RamBLL;
+        protected readonly IResponseMessenger _ResponseMessenger;
 
-        public RamController(IRamBLL RamBLL)
+        public RamController(IRamBLL RamBLL, IResponseMessenger ResponseMessenger)
         {
             _RamBLL = RamBLL;
+            _ResponseMessenger = ResponseMessenger;
         }
 
         [HttpGet("{id}")]
@@ -28,8 +31,7 @@ namespace WebshopAPI.Controllers
                 return Ok(result);
             }
 
-            // a response üzeneteket ki lehet szervezni egy osztályba, így nem kell mindenoh átirogatni módosítás esetén
-            return NotFound($"There is no product with ID: {id}");
+            return NotFound(_ResponseMessenger.SendProductIdNotFoundMessage(typeof(Ram).Name, id));
         }
 
         [HttpGet]
@@ -48,7 +50,7 @@ namespace WebshopAPI.Controllers
                 return CreatedAtAction(nameof(Get), new { id = result.ID }, result);
             }
 
-            return UnprocessableEntity("Faulty product data");
+            return UnprocessableEntity(_ResponseMessenger.SendWrongProductDataMessage());
         }
 
         [HttpPut("{id}")]
@@ -56,12 +58,12 @@ namespace WebshopAPI.Controllers
         {
             if (ram.ID != id)
             {
-                return BadRequest("Invalid product ID");
+                return BadRequest(_ResponseMessenger.SendWrongProductIdMessage(typeof(Ram).Name, ram.ID, id));
             }
 
             if (await _RamBLL.GetByID(ram.ID) == null)
             {
-                return NotFound($"There is no product with ID: {id}");
+                return NotFound(_ResponseMessenger.SendProductIdNotFoundMessage(typeof(Ram).Name, id));
             }
 
             var result = await _RamBLL.Update(ram);
@@ -71,7 +73,7 @@ namespace WebshopAPI.Controllers
                 return Ok(result);
             }
 
-            return UnprocessableEntity("Faulty product data");
+            return UnprocessableEntity(_ResponseMessenger.SendWrongProductDataMessage());
         }
 
         [HttpDelete("delete/{id}")]
@@ -81,7 +83,7 @@ namespace WebshopAPI.Controllers
 
             if (ramToDelete == null)
             {
-                return NotFound($"There is no product with ID: {id}");
+                return NotFound(_ResponseMessenger.SendProductIdNotFoundMessage(typeof(Ram).Name, id));
             }
 
             return Ok(await _RamBLL.Delete(ramToDelete));
@@ -92,10 +94,10 @@ namespace WebshopAPI.Controllers
         {
             if (Enum.IsDefined(typeof(RamSocketEnum), socket))
             {
-                return NotFound($"The ({socket}) socket type is not exist");
+                return NotFound(_ResponseMessenger.SendWrongSocketTypeMessage(((int)socket)));
             }
 
-            return Ok(await _RamBLL.GetMemoriesBySocket(socket));    
+            return Ok(await _RamBLL.GetMemoriesBySocket(socket));
         }
     }
 }

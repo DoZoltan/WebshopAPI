@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using WebshopAPI.BLL.Interfaces;
 using WebshopAPI.DAL.Models;
 using WebshopAPI.Enums;
+using WebshopAPI.Services.ResponseMessenger;
 
 namespace WebshopAPI.Controllers
 {
@@ -12,10 +13,12 @@ namespace WebshopAPI.Controllers
     public class CpuController : ControllerBase
     {
         protected readonly ICpuBLL _CpuBLL;
+        protected readonly IResponseMessenger _ResponseMessenger;
 
-        public CpuController(ICpuBLL CpuBLL)
+        public CpuController(ICpuBLL CpuBLL, IResponseMessenger ResponseMessenger)
         {
             _CpuBLL = CpuBLL;
+            _ResponseMessenger = ResponseMessenger;
         }
 
         [HttpGet("{id}")]
@@ -28,7 +31,7 @@ namespace WebshopAPI.Controllers
                 return Ok(result);
             }
 
-            return NotFound($"There is no product with ID: {id}");
+            return NotFound(_ResponseMessenger.SendProductIdNotFoundMessage(typeof(Cpu).Name, id));
         }
 
         [HttpGet]
@@ -47,7 +50,7 @@ namespace WebshopAPI.Controllers
                 return CreatedAtAction(nameof(Get), new { id = result.ID }, result);
             }
 
-            return UnprocessableEntity("Faulty product data");
+            return UnprocessableEntity(_ResponseMessenger.SendWrongProductDataMessage());
         }
 
         [HttpPut("{id}")]
@@ -55,12 +58,12 @@ namespace WebshopAPI.Controllers
         {
             if (cpu.ID != id)
             {
-                return BadRequest("Invalid product ID");
+                return BadRequest(_ResponseMessenger.SendWrongProductIdMessage(typeof(Cpu).Name, cpu.ID, id));
             }
 
             if (await _CpuBLL.GetByID(cpu.ID) == null)
             {
-                return NotFound($"There is no product with ID: {id}");
+                return NotFound(_ResponseMessenger.SendProductIdNotFoundMessage(typeof(Cpu).Name, id));
             }
 
             var result = await _CpuBLL.Update(cpu);
@@ -70,7 +73,7 @@ namespace WebshopAPI.Controllers
                 return Ok(result);
             }
 
-            return UnprocessableEntity("Faulty product data");
+            return UnprocessableEntity(_ResponseMessenger.SendWrongProductDataMessage());
         }
 
         [HttpDelete("delete/{id}")]
@@ -80,7 +83,7 @@ namespace WebshopAPI.Controllers
 
             if (ramToDelete == null)
             {
-                return NotFound($"There is no product with ID: {id}");
+                return NotFound(_ResponseMessenger.SendProductIdNotFoundMessage(typeof(Cpu).Name, id));
             }
 
             return Ok(await _CpuBLL.Delete(ramToDelete));
@@ -91,7 +94,7 @@ namespace WebshopAPI.Controllers
         {
             if (Enum.IsDefined(typeof(CpuSocketEnum), socket))
             {
-                return NotFound($"The ({socket}) socket type is not exist");
+                return NotFound(_ResponseMessenger.SendWrongSocketTypeMessage(((int)socket)));
             }
 
             return Ok(await _CpuBLL.GetCpusBySocket(socket));

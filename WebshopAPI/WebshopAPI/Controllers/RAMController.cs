@@ -29,5 +29,11 @@ namespace WebshopAPI.Controllers
 
             return Ok(await _RamBLL.GetMemoriesBySocket(socket));
         }
+
+        [HttpGet("grid")]
+        public async Task<IActionResult> GetProductsForGridData()
+        {
+            return Ok(await _RamBLL.GetProductsForGridData());
+        }
     }
 }

@@ -40,5 +40,11 @@ namespace WebshopAPI.Controllers
 
             return Ok(await _motherboardBLL.GetMotherboardsByMemory(memorySocket));
         }
+
+        [HttpGet("grid")]
+        public async Task<IActionResult> GetProductsForGridData()
+        {
+            return Ok(await _motherboardBLL.GetProductsForGridData());
+        }
     }
 }

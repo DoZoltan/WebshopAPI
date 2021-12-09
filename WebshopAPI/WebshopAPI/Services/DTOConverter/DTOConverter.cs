@@ -12,7 +12,8 @@ namespace WebshopAPI.Services.DTOConverter
                 ID = baseProduct.ID,
                 ProductName = baseProduct.ProductName,
                 Brand = baseProduct.Brand,
-                SellPrice = baseProduct.SellPrice
+                SellPrice = baseProduct.SellPrice,
+                ProductType = baseProduct.ProductType
             };
         }
     }

@@ -1,4 +1,6 @@
-﻿namespace WebshopAPI.DAL.DTOs
+﻿using WebshopAPI.Enums;
+
+namespace WebshopAPI.DAL.DTOs
 {
     public class ProductGridDataDTO
     {
@@ -6,5 +8,6 @@
         public string ProductName { get; set; }
         public string Brand { get; set; }
         public int SellPrice { get; set; }
+        public ProductTypeEnum ProductType { get; set; }
     }
 }

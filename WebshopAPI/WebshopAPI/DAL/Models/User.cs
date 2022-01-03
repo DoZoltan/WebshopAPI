@@ -11,7 +11,7 @@ namespace WebshopAPI.DAL.Models
         public string ProfilePicture { get; set; }
         public DateTime BirthDate { get; set; }
         public DateTime RegistrationDate { get; set; }
-        public ICollection<BaseProduct> ProductsInCart { get; set; }
-        public ICollection<BaseProduct> PreviouslyOrderedProducts { get; set; }
+        public ShoppingCart Cart { get; set; }
+        public ICollection<Order> Orders { get; set; }
     }
 }

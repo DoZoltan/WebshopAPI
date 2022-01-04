@@ -49,7 +49,6 @@ namespace WebshopAPI
                 var impl = allProviderTypes.FirstOrDefault(c => c.IsClass && intfc.Name.Substring(1) == c.Name);
                 if (impl != null) services.AddScoped(intfc, impl);
             }
-
             
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 

@@ -125,9 +125,9 @@ namespace WebshopAPI.BLL.Classes
             return new AuthenticationResponseDTO(true, new List<string>() { $"There is a user with {userName} name" }, user);
         }
 
-        public async Task<AuthenticationResponseDTO> Login(UserLoginRequestDTO userDTO, User user)
+        public async Task<AuthenticationResponseDTO> Login(UserLoginRequestDTO loginDTO, User user)
         {
-            var isThePasswordValid = await _userManager.CheckPasswordAsync(user, userDTO.Password);
+            var isThePasswordValid = await _userManager.CheckPasswordAsync(user, loginDTO.Password);
 
             if (!isThePasswordValid)
             {
@@ -146,7 +146,7 @@ namespace WebshopAPI.BLL.Classes
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
 
-            var signInresult = await _signInManager.PasswordSignInAsync(user, userDTO.Password, isPersistent: userDTO.RememberMe, false);
+            var signInresult = await _signInManager.PasswordSignInAsync(user, loginDTO.Password, isPersistent: loginDTO.RememberMe, false);
 
             if (signInresult.Succeeded)
             {

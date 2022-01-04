@@ -13,7 +13,7 @@ namespace WebshopAPI.BLL.Interfaces
         Task<AuthenticationResponseDTO> GetUserByEmail(string email);
         Task<AuthenticationResponseDTO> GetUserByUserName(string userName);
         Task<AuthenticationResponseDTO> GetCurrentUserByClaimsPrincipal(ClaimsPrincipal user);
-        Task<AuthenticationResponseDTO> Login(UserLoginRequestDTO userDTO, User user);
+        Task<AuthenticationResponseDTO> Login(UserLoginRequestDTO loginDTO, User user);
         Task<UserDataChangeResponseDTO> ChangePassword(ChangePasswordRequestDTO requestDTO, User user);
         Task<UserDataChangeResponseDTO> ChangeEmail(ChangeEmailRequestDTO requestDTO, User user);
         Task<UserDataChangeResponseDTO> ChangeUserName(ChangeUserNameRequestDTO requestDTO, User user);

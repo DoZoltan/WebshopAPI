@@ -10,7 +10,7 @@ using WebshopAPI.DAL;
 namespace WebshopAPI.DAL.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    [Migration("20220103152536_ApplyUserRelatedModels")]
+    [Migration("20220104063800_ApplyUserRelatedModels")]
     partial class ApplyUserRelatedModels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

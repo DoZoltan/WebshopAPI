@@ -75,7 +75,7 @@ namespace WebshopAPI
 
             app.UseCors("Access-Control-Allow-Origin");
 
-            //app.UseCustomExceptionHandler();
+            app.UseCustomExceptionHandler();
 
             app.UseAuthentication();
 

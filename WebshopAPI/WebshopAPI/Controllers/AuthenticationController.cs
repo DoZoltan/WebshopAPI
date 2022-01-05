@@ -125,11 +125,11 @@ namespace WebshopAPI.Controllers
             return BadRequest(changeResult.Messages);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpGet("TestAuthorization")]
         public IActionResult TestAuthorization()
         {
-            return Ok("You can enter here only after login");
+            return Ok("You can enter here only if you are any Admin");
         }
     }
 }

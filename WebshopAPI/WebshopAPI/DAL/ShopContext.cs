@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using WebshopAPI.DAL.Models;
 
 namespace WebshopAPI.DAL
@@ -19,6 +20,7 @@ namespace WebshopAPI.DAL
         public DbSet<CartContent> CartContent { get; set; }
         public DbSet<OrderContent> OrderContent { get; set; }
 
+        /*
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.Entity<User>()
@@ -28,7 +30,8 @@ namespace WebshopAPI.DAL
 
             // A ModelBuilder-hez írt extension metódus meghívása
             modelBuilder.Seed();
+            
             base.OnModelCreating(modelBuilder);
-        }
+        }*/
     }
 }

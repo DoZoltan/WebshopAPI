@@ -84,6 +84,48 @@ namespace WebshopAPI.Controllers
         }
 
         [Authorize]
+        [HttpPost("ChangeEmail")]
+        public async Task<IActionResult> ChangeEmail([FromBody] ChangeEmailRequestDTO requestDTO)
+        {
+            var searchUserResult = await _AuthenticationBLL.GetCurrentUserByClaimsPrincipal(HttpContext.User);
+
+            if (!searchUserResult.Succeeded)
+            {
+                return BadRequest(searchUserResult.Messages);
+            }
+
+            var changeResult = await _AuthenticationBLL.ChangeEmail(requestDTO, searchUserResult.User);
+
+            if (changeResult.Succeeded)
+            {
+                return Ok(changeResult.Messages);
+            }
+
+            return BadRequest(changeResult.Messages);
+        }
+
+        [Authorize]
+        [HttpPost("ChangeUserName")]
+        public async Task<IActionResult> ChangeUserName([FromBody] ChangeUserNameRequestDTO requestDTO)
+        {
+            var searchUserResult = await _AuthenticationBLL.GetCurrentUserByClaimsPrincipal(HttpContext.User);
+
+            if (!searchUserResult.Succeeded)
+            {
+                return BadRequest(searchUserResult.Messages);
+            }
+
+            var changeResult = await _AuthenticationBLL.ChangeUserName(requestDTO, searchUserResult.User);
+
+            if (changeResult.Succeeded)
+            {
+                return Ok(changeResult.Messages);
+            }
+
+            return BadRequest(changeResult.Messages);
+        }
+
+        [Authorize]
         [HttpGet("TestAuthorization")]
         public IActionResult TestAuthorization()
         {

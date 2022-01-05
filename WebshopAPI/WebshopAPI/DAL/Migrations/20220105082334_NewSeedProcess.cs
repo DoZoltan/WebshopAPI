@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebshopAPI.DAL.Migrations
 {
-    public partial class ApplyUserRelatedModels : Migration
+    public partial class NewSeedProcess : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -304,33 +304,6 @@ namespace WebshopAPI.DAL.Migrations
                         principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.InsertData(
-                table: "Cpus",
-                columns: new[] { "ID", "AcquisitionPrice", "Brand", "CoreNumber", "ImgURL", "L3Cache", "ProductName", "ProductType", "SellPrice", "SocketType", "Speed" },
-                values: new object[,]
-                {
-                    { 1, 100, "INTEL", 8, "", 24, "Test CPU 1", 1, 110, 27, 3700 },
-                    { 2, 120, "AMD", 12, "", 32, "Test CPU 2", 1, 140, 11, 3900 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Motherboards",
-                columns: new[] { "ID", "AcquisitionPrice", "Brand", "CpuSocketType", "ImgURL", "MaxMemorySize", "MemorySocketType", "NumberOfMemorySockets", "ProductName", "ProductType", "SellPrice", "SizeStandard", "Usb3Amount", "Wifi" },
-                values: new object[,]
-                {
-                    { 1, 80, "ASUS", 11, "", 128, 5, 4, "Test Motherboard 1", 3, 95, 1, 8, true },
-                    { 2, 110, "MSI", 27, "", 128, 6, 4, "Test Motherboard 2", 3, 125, 4, 6, true }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Rams",
-                columns: new[] { "ID", "AcquisitionPrice", "Brand", "Delay", "Gb", "ImgURL", "ProductName", "ProductType", "SellPrice", "SocketType", "Speed" },
-                values: new object[,]
-                {
-                    { 1, 30, "G.SKILL", 8, 32, "", "Test RAM 1", 2, 35, 5, 4200 },
-                    { 2, 80, "KINGSTON", 12, 64, "", "Test RAM 2", 2, 99, 6, 6700 }
                 });
 
             migrationBuilder.CreateIndex(

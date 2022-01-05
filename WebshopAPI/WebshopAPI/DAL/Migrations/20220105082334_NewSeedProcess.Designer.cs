@@ -10,8 +10,8 @@ using WebshopAPI.DAL;
 namespace WebshopAPI.DAL.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    [Migration("20220104063800_ApplyUserRelatedModels")]
-    partial class ApplyUserRelatedModels
+    [Migration("20220105082334_NewSeedProcess")]
+    partial class NewSeedProcess
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -217,36 +217,6 @@ namespace WebshopAPI.DAL.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Cpus");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            AcquisitionPrice = 100,
-                            Brand = "INTEL",
-                            CoreNumber = 8,
-                            ImgURL = "",
-                            L3Cache = 24,
-                            ProductName = "Test CPU 1",
-                            ProductType = 1,
-                            SellPrice = 110,
-                            SocketType = 27,
-                            Speed = 3700
-                        },
-                        new
-                        {
-                            ID = 2,
-                            AcquisitionPrice = 120,
-                            Brand = "AMD",
-                            CoreNumber = 12,
-                            ImgURL = "",
-                            L3Cache = 32,
-                            ProductName = "Test CPU 2",
-                            ProductType = 1,
-                            SellPrice = 140,
-                            SocketType = 11,
-                            Speed = 3900
-                        });
                 });
 
             modelBuilder.Entity("WebshopAPI.DAL.Models.Motherboard", b =>
@@ -300,42 +270,6 @@ namespace WebshopAPI.DAL.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Motherboards");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            AcquisitionPrice = 80,
-                            Brand = "ASUS",
-                            CpuSocketType = 11,
-                            ImgURL = "",
-                            MaxMemorySize = 128,
-                            MemorySocketType = 5,
-                            NumberOfMemorySockets = 4,
-                            ProductName = "Test Motherboard 1",
-                            ProductType = 3,
-                            SellPrice = 95,
-                            SizeStandard = 1,
-                            Usb3Amount = 8,
-                            Wifi = true
-                        },
-                        new
-                        {
-                            ID = 2,
-                            AcquisitionPrice = 110,
-                            Brand = "MSI",
-                            CpuSocketType = 27,
-                            ImgURL = "",
-                            MaxMemorySize = 128,
-                            MemorySocketType = 6,
-                            NumberOfMemorySockets = 4,
-                            ProductName = "Test Motherboard 2",
-                            ProductType = 3,
-                            SellPrice = 125,
-                            SizeStandard = 4,
-                            Usb3Amount = 6,
-                            Wifi = true
-                        });
                 });
 
             modelBuilder.Entity("WebshopAPI.DAL.Models.Order", b =>
@@ -420,36 +354,6 @@ namespace WebshopAPI.DAL.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Rams");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            AcquisitionPrice = 30,
-                            Brand = "G.SKILL",
-                            Delay = 8,
-                            Gb = 32,
-                            ImgURL = "",
-                            ProductName = "Test RAM 1",
-                            ProductType = 2,
-                            SellPrice = 35,
-                            SocketType = 5,
-                            Speed = 4200
-                        },
-                        new
-                        {
-                            ID = 2,
-                            AcquisitionPrice = 80,
-                            Brand = "KINGSTON",
-                            Delay = 12,
-                            Gb = 64,
-                            ImgURL = "",
-                            ProductName = "Test RAM 2",
-                            ProductType = 2,
-                            SellPrice = 99,
-                            SocketType = 6,
-                            Speed = 6700
-                        });
                 });
 
             modelBuilder.Entity("WebshopAPI.DAL.Models.ShoppingCart", b =>

@@ -103,7 +103,7 @@ namespace WebshopAPI.Controllers
             return NotFound(searchResult.ResponseMessage);
         }
 
-        [HttpGet("UsersByRole/{uroleName}")]
+        [HttpGet("UsersByRole/{roleName}")]
         public async Task<IActionResult> GetUsersByRole(string roleName)
         {
             var searchResult = await _UserRoleBLL.GetUsersByRole(roleName);

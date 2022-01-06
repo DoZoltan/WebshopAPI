@@ -1,4 +1,6 @@
-﻿namespace WebshopAPI.DAL.DTOs.ResponseDTOs
+﻿using System.Collections.Generic;
+
+namespace WebshopAPI.DAL.DTOs.ResponseDTOs
 {
     public class ModifyRolesResponseDTO
     {
@@ -8,7 +10,14 @@
             ResponseMessage = responseMessage;
         }
 
+        public ModifyRolesResponseDTO(bool succeeded, IEnumerable<string> responseMessages)
+        {
+            Succeeded = succeeded;
+            ResponseMessages = responseMessages;
+        }
+
         public bool Succeeded { get; set; }
         public string ResponseMessage { get; set; }
+        public IEnumerable<string> ResponseMessages { get; set; }
     }
 }

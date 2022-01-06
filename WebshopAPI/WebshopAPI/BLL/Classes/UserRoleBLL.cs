@@ -20,7 +20,7 @@ namespace WebshopAPI.BLL.Classes
             _userManager = userManager;
         }
 
-        public async Task<bool> CreateRole(CreateOrDeleteRoleRequestDTO roleRequest)
+        public async Task<ModifyRolesResponseDTO> CreateRole(CreateOrDeleteRoleRequestDTO roleRequest)
         {
             IdentityRole identityRole = new IdentityRole()
             {
@@ -29,7 +29,19 @@ namespace WebshopAPI.BLL.Classes
 
             var identityResult = await _roleManager.CreateAsync(identityRole);
 
-            return identityResult.Succeeded;
+            if (identityResult.Succeeded)
+            {
+                return new ModifyRolesResponseDTO(identityResult.Succeeded, $"The {roleRequest.RoleName} role was successfully created");
+            }
+
+            var errorsDuringCreateNewRole = new List<string>();
+
+            foreach (var error in identityResult.Errors)
+            {
+                errorsDuringCreateNewRole.Add(error.Description);
+            }
+
+            return new ModifyRolesResponseDTO(identityResult.Succeeded, errorsDuringCreateNewRole);
         }
 
         public IEnumerable<string> GetRoles()

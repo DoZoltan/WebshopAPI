@@ -120,7 +120,9 @@ namespace WebshopAPI.BLL.Classes
                 return new ModifyRolesResponseDTO(false, new List<string>() { $"The user ({roleRequest.UserName}) or the role ({roleRequest.RoleName}) not exists" });
             }
 
-            if (await _userManager.IsInRoleAsync(foundUser, foundRole.Name))
+            var isTheUserHaveThisRole = await _userManager.IsInRoleAsync(foundUser, foundRole.Name);
+
+            if (!isTheUserHaveThisRole)
             {
                 return new ModifyRolesResponseDTO(false, new List<string>() { $"The user ({roleRequest.UserName}) don't have this role" });
             }

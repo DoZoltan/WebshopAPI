@@ -5,7 +5,7 @@ namespace WebshopAPI.DAL.DTOs.ResponseDTOs
 {
     public class GetUsersByRoleResponseDTO
     {
-        public GetUsersByRoleResponseDTO(bool succeeded, IEnumerable<User> foundUsers, string responseMessage)
+        public GetUsersByRoleResponseDTO(bool succeeded, IEnumerable<UserDataResponseDTO> foundUsers, string responseMessage)
         {
             Succeeded = succeeded;
             FoundUsers = foundUsers;
@@ -13,7 +13,7 @@ namespace WebshopAPI.DAL.DTOs.ResponseDTOs
         }
 
         public bool Succeeded { get; set; }
-        public IEnumerable<User> FoundUsers { get; set; }
+        public IEnumerable<UserDataResponseDTO> FoundUsers { get; set; }
         public string ResponseMessage { get; set; }
     }
 }

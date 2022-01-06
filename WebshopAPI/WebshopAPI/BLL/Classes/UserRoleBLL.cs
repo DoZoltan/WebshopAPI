@@ -6,6 +6,7 @@ using WebshopAPI.BLL.Interfaces;
 using WebshopAPI.DAL.DTOs.RequestDTOs;
 using WebshopAPI.DAL.DTOs.ResponseDTOs;
 using WebshopAPI.DAL.Models;
+using WebshopAPI.Services.DTOConverter;
 
 namespace WebshopAPI.BLL.Classes
 {
@@ -143,22 +144,22 @@ namespace WebshopAPI.BLL.Classes
 
             if (foundRole == null)
             {
-                return new GetUsersByRoleResponseDTO(false, new List<User>(), $"The {roleName} role is not exists");
+                return new GetUsersByRoleResponseDTO(false, new List<UserDataResponseDTO>(), $"The {roleName} role is not exists");
             }
 
-            var usersWithRole = new List<User>();
+            var usersWithRole = new List<UserDataResponseDTO>();
 
             foreach (var user in _userManager.Users)
             {
                 if (await _userManager.IsInRoleAsync(user, foundRole.Name))
                 {
-                    usersWithRole.Add(user);
+                    usersWithRole.Add(user.AsUserDataResponseDTO());
                 }
             }
 
             if (usersWithRole.Count == 0)
             {
-                return new GetUsersByRoleResponseDTO(false, new List<User>(), $"There is no user with {roleName} role");
+                return new GetUsersByRoleResponseDTO(false, new List<UserDataResponseDTO>(), $"There is no user with {roleName} role");
             }
 
             return new GetUsersByRoleResponseDTO(true, usersWithRole, $"There are users with {roleName} role");

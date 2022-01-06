@@ -8,12 +8,13 @@ namespace WebshopAPI.BLL.Interfaces
 {
     public interface IUserRoleBLL
     {
-        Task<bool> CreateRole(CreateRoleRequestDTO roleRequest);
+        Task<bool> CreateRole(CreateOrDeleteRoleRequestDTO roleRequest);
         IEnumerable<string> GetRoles();
         Task<bool> EditRole(EditRoleRequestDTO roleRequest);
-        Task<ModifyUserRolesResponseDTO> AddRoleToUser(ModifyUserRolesRequestDTO roleRequest);
+        Task<ModifyRolesResponseDTO> AddRoleToUser(ModifyUserRolesRequestDTO roleRequest);
         Task<GetUsersByRoleResponseDTO> GetUsersByRole(string roleName);
         Task<GetRolesByUserNameResponseDTO> GetRolesByUser(string userName);
-        Task<ModifyUserRolesResponseDTO> RemoveRoleFromUser(ModifyUserRolesRequestDTO roleRequest);
+        Task<ModifyRolesResponseDTO> RemoveRoleFromUser(ModifyUserRolesRequestDTO roleRequest);
+        Task<ModifyRolesResponseDTO> RemoveRole(CreateOrDeleteRoleRequestDTO roleRequest);
     }
 }

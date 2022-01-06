@@ -20,7 +20,7 @@ namespace WebshopAPI.BLL.Classes
             _userManager = userManager;
         }
 
-        public async Task<bool> CreateRole(CreateRoleRequestDTO roleRequest)
+        public async Task<bool> CreateRole(CreateOrDeleteRoleRequestDTO roleRequest)
         {
             IdentityRole identityRole = new IdentityRole()
             {
@@ -61,54 +61,54 @@ namespace WebshopAPI.BLL.Classes
             return updateResult.Succeeded;
         }
 
-        public async Task<ModifyUserRolesResponseDTO> AddRoleToUser(ModifyUserRolesRequestDTO roleRequest)
+        public async Task<ModifyRolesResponseDTO> AddRoleToUser(ModifyUserRolesRequestDTO roleRequest)
         {
             var foundRole = await _roleManager.FindByNameAsync(roleRequest.RoleName);
             var foundUser = await _userManager.FindByNameAsync(roleRequest.UserName);
 
             if (foundRole == null || foundUser == null)
             {
-                return new ModifyUserRolesResponseDTO(false, $"The user ({roleRequest.UserName}) or the role ({roleRequest.RoleName}) not exists");
+                return new ModifyRolesResponseDTO(false, $"The user ({roleRequest.UserName}) or the role ({roleRequest.RoleName}) not exists");
             }
 
             if (await _userManager.IsInRoleAsync(foundUser, foundRole.Name))
             {
-                return new ModifyUserRolesResponseDTO(false, $"The user ({roleRequest.UserName}) already have this role");
+                return new ModifyRolesResponseDTO(false, $"The user ({roleRequest.UserName}) already have this role");
             }
 
             var addRoleResult = await _userManager.AddToRoleAsync(foundUser, foundRole.Name);
 
             if (addRoleResult.Succeeded)
             {
-                return new ModifyUserRolesResponseDTO(addRoleResult.Succeeded, $"The {roleRequest.RoleName} role was applied to {roleRequest.UserName} user");
+                return new ModifyRolesResponseDTO(addRoleResult.Succeeded, $"The {roleRequest.RoleName} role was applied to {roleRequest.UserName} user");
             }
             
-            return new ModifyUserRolesResponseDTO(addRoleResult.Succeeded, "Something went wrong during the procedure");
+            return new ModifyRolesResponseDTO(addRoleResult.Succeeded, "Something went wrong during the procedure");
         }
 
-        public async Task<ModifyUserRolesResponseDTO> RemoveRoleFromUser(ModifyUserRolesRequestDTO roleRequest)
+        public async Task<ModifyRolesResponseDTO> RemoveRoleFromUser(ModifyUserRolesRequestDTO roleRequest)
         {
             var foundRole = await _roleManager.FindByNameAsync(roleRequest.RoleName);
             var foundUser = await _userManager.FindByNameAsync(roleRequest.UserName);
 
             if (foundRole == null || foundUser == null)
             {
-                return new ModifyUserRolesResponseDTO(false, $"The user ({roleRequest.UserName}) or the role ({roleRequest.RoleName}) not exists");
+                return new ModifyRolesResponseDTO(false, $"The user ({roleRequest.UserName}) or the role ({roleRequest.RoleName}) not exists");
             }
 
             if (await _userManager.IsInRoleAsync(foundUser, foundRole.Name))
             {
-                return new ModifyUserRolesResponseDTO(false, $"The user ({roleRequest.UserName}) don't have this role");
+                return new ModifyRolesResponseDTO(false, $"The user ({roleRequest.UserName}) don't have this role");
             }
 
             var addRoleResult = await _userManager.RemoveFromRoleAsync(foundUser, foundRole.Name);
 
             if (addRoleResult.Succeeded)
             {
-                return new ModifyUserRolesResponseDTO(addRoleResult.Succeeded, $"The {roleRequest.RoleName} role was removed from {roleRequest.UserName} user");
+                return new ModifyRolesResponseDTO(addRoleResult.Succeeded, $"The {roleRequest.RoleName} role was removed from {roleRequest.UserName} user");
             }
 
-            return new ModifyUserRolesResponseDTO(addRoleResult.Succeeded, "Something went wrong during the procedure");
+            return new ModifyRolesResponseDTO(addRoleResult.Succeeded, "Something went wrong during the procedure");
         }
 
         public async Task<GetUsersByRoleResponseDTO> GetUsersByRole(string roleName)
@@ -155,6 +155,25 @@ namespace WebshopAPI.BLL.Classes
             }
 
             return new GetRolesByUserNameResponseDTO(true, rolesByUser, "Roles was found");
+        }
+
+        public async Task<ModifyRolesResponseDTO> RemoveRole(CreateOrDeleteRoleRequestDTO roleRequest)
+        {
+            var foundRole = await _roleManager.FindByNameAsync(roleRequest.RoleName);
+
+            if (foundRole == null)
+            {
+                return new ModifyRolesResponseDTO(false, $"The role ({roleRequest.RoleName}) is not exists");
+            }
+
+            var removeResult = await _roleManager.DeleteAsync(foundRole);
+
+            if (removeResult.Succeeded)
+            {
+                return new ModifyRolesResponseDTO(removeResult.Succeeded, $"The role ({roleRequest.RoleName}) was successfully deleted");
+            }
+
+            return new ModifyRolesResponseDTO(removeResult.Succeeded, $"Deleting the role ({roleRequest.RoleName}) is not possible"); ;
         }
     }
 }

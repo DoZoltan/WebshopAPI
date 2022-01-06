@@ -193,6 +193,11 @@ namespace WebshopAPI.BLL.Classes
                 return new ModifyRolesResponseDTO(false, new List<string>() { $"The role ({roleRequest.RoleName}) is not exists" });
             }
 
+            if (foundRole.Name == "Admin")
+            {
+                return new ModifyRolesResponseDTO(false, new List<string>() { $"Removing Admin role is not possible" });
+            }
+
             var removeResult = await _roleManager.DeleteAsync(foundRole);
 
             if (removeResult.Succeeded)

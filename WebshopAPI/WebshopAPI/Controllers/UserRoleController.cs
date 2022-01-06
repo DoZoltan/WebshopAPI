@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using WebshopAPI.BLL.Interfaces;
@@ -8,6 +9,7 @@ namespace WebshopAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class UserRoleController : ControllerBase
     {
         public IUserRoleBLL _UserRoleBLL { get; set; }

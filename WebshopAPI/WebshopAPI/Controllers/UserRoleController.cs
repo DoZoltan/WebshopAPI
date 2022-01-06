@@ -67,7 +67,7 @@ namespace WebshopAPI.Controllers
         [HttpPost("AddRoleToUser")]
         public async Task<IActionResult> AddRoleToUser(ModifyUserRolesRequestDTO roleRequest)
         {
-            var addingResult = await _UserRoleBLL.AddRoleToUser(roleRequest);
+            var addingResult = await _UserRoleBLL.AddRoleToUser(roleRequest, HttpContext.User);
 
             if (addingResult.Succeeded)
             {

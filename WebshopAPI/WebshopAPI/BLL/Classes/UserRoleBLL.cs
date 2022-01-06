@@ -87,8 +87,15 @@ namespace WebshopAPI.BLL.Classes
             return new ModifyRolesResponseDTO(updateResult.Succeeded, errorsDuringUpdateRole);
         }
 
-        public async Task<ModifyRolesResponseDTO> AddRoleToUser(ModifyUserRolesRequestDTO roleRequest)
+        public async Task<ModifyRolesResponseDTO> AddRoleToUser(ModifyUserRolesRequestDTO roleRequest, ClaimsPrincipal user)
         {
+            var currentUser = await _userManager.GetUserAsync(user);
+
+            if (currentUser.UserName == roleRequest.UserName)
+            {
+                return new ModifyRolesResponseDTO(false, new List<string>() { "You can't add roles to yourself" });
+            }
+
             var foundRole = await _roleManager.FindByNameAsync(roleRequest.RoleName);
             var foundUser = await _userManager.FindByNameAsync(roleRequest.UserName);
 

@@ -32,7 +32,7 @@ namespace WebshopAPI.Controllers
             return BadRequest($"Creating {roleRequest.RoleName} role is not possible");
         }
 
-        [HttpPost("RemoveRole")]
+        [HttpDelete("RemoveRole")]
         public async Task<IActionResult> RemoveRole([FromBody] CreateOrDeleteRoleRequestDTO roleRequest)
         {
             var removeResponse = await _UserRoleBLL.RemoveRole(roleRequest);
@@ -77,7 +77,7 @@ namespace WebshopAPI.Controllers
             return BadRequest(addingResult.ResponseMessage);
         }
 
-        [HttpPost("RemoveRoleFromUser")]
+        [HttpDelete("RemoveRoleFromUser")]
         public async Task<IActionResult> RemoveRoleFromUser(ModifyUserRolesRequestDTO roleRequest)
         {
             var removeResult = await _UserRoleBLL.RemoveRoleFromUser(roleRequest);

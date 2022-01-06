@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using WebshopAPI.DAL.DTOs.RequestDTOs;
 using WebshopAPI.DAL.DTOs.ResponseDTOs;
@@ -14,7 +15,7 @@ namespace WebshopAPI.BLL.Interfaces
         Task<ModifyRolesResponseDTO> AddRoleToUser(ModifyUserRolesRequestDTO roleRequest);
         Task<GetUsersByRoleResponseDTO> GetUsersByRole(string roleName);
         Task<GetRolesByUserNameResponseDTO> GetRolesByUser(string userName);
-        Task<ModifyRolesResponseDTO> RemoveRoleFromUser(ModifyUserRolesRequestDTO roleRequest);
+        Task<ModifyRolesResponseDTO> RemoveRoleFromUser(ModifyUserRolesRequestDTO roleRequest, ClaimsPrincipal user);
         Task<ModifyRolesResponseDTO> RemoveRole(CreateOrDeleteRoleRequestDTO roleRequest);
     }
 }

@@ -80,7 +80,7 @@ namespace WebshopAPI.Controllers
         [HttpDelete("RemoveRoleFromUser")]
         public async Task<IActionResult> RemoveRoleFromUser(ModifyUserRolesRequestDTO roleRequest)
         {
-            var removeResult = await _UserRoleBLL.RemoveRoleFromUser(roleRequest);
+            var removeResult = await _UserRoleBLL.RemoveRoleFromUser(roleRequest, HttpContext.User);
 
             if (removeResult.Succeeded)
             {

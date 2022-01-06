@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using WebshopAPI.BLL.Interfaces;
 using WebshopAPI.DAL.DTOs.RequestDTOs;
@@ -111,8 +112,15 @@ namespace WebshopAPI.BLL.Classes
             return new ModifyRolesResponseDTO(addRoleResult.Succeeded, new List<string>() { "Something went wrong during the procedure" });
         }
 
-        public async Task<ModifyRolesResponseDTO> RemoveRoleFromUser(ModifyUserRolesRequestDTO roleRequest)
+        public async Task<ModifyRolesResponseDTO> RemoveRoleFromUser(ModifyUserRolesRequestDTO roleRequest, ClaimsPrincipal user)
         {
+            var currentUser = await _userManager.GetUserAsync(user);
+
+            if (currentUser.UserName == roleRequest.UserName) 
+            {
+                return new ModifyRolesResponseDTO(false, new List<string>() { "You can't remove your own roles" });
+            }
+
             var foundRole = await _roleManager.FindByNameAsync(roleRequest.RoleName);
             var foundUser = await _userManager.FindByNameAsync(roleRequest.UserName);
 

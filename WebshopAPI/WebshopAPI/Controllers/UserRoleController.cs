@@ -26,7 +26,7 @@ namespace WebshopAPI.Controllers
 
             if (creatingResponse.Succeeded)
             {
-                return Ok(creatingResponse.ResponseMessage);
+                return Ok(creatingResponse.ResponseMessages);
             }
 
             return BadRequest(creatingResponse.ResponseMessages);
@@ -39,10 +39,10 @@ namespace WebshopAPI.Controllers
 
             if (removeResponse.Succeeded)
             {
-                return Ok(removeResponse.ResponseMessage);
+                return Ok(removeResponse.ResponseMessages);
             }
 
-            return BadRequest(removeResponse.ResponseMessage);
+            return BadRequest(removeResponse.ResponseMessages);
         }
 
         [HttpGet("Roles")]
@@ -54,14 +54,14 @@ namespace WebshopAPI.Controllers
         [HttpPost("EditRole")]
         public async Task<IActionResult> EditRole(EditRoleRequestDTO roleRequest)
         {
-            var isEditingWasSuccessful = await _UserRoleBLL.EditRole(roleRequest);
+            var editResponse = await _UserRoleBLL.EditRole(roleRequest);
 
-            if (isEditingWasSuccessful)
+            if (editResponse.Succeeded)
             {
-                return Ok($"The {roleRequest.RoleNameToEdit} role was successfuly modified to {roleRequest.NewRoleName}");
+                return Ok(editResponse.ResponseMessages);
             }
 
-            return BadRequest($"Modifying the {roleRequest.RoleNameToEdit} role is not possible");
+            return BadRequest(editResponse.ResponseMessages);
         }
 
         [HttpPost("AddRoleToUser")]
@@ -71,10 +71,10 @@ namespace WebshopAPI.Controllers
 
             if (addingResult.Succeeded)
             {
-                return Ok(addingResult.ResponseMessage);
+                return Ok(addingResult.ResponseMessages);
             }
 
-            return BadRequest(addingResult.ResponseMessage);
+            return BadRequest(addingResult.ResponseMessages);
         }
 
         [HttpDelete("RemoveRoleFromUser")]
@@ -84,10 +84,10 @@ namespace WebshopAPI.Controllers
 
             if (removeResult.Succeeded)
             {
-                return Ok(removeResult.ResponseMessage);
+                return Ok(removeResult.ResponseMessages);
             }
 
-            return BadRequest(removeResult.ResponseMessage);
+            return BadRequest(removeResult.ResponseMessages);
         }
 
         [HttpGet("RolesByUser/{userName}")]

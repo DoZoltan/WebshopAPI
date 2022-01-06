@@ -10,7 +10,7 @@ namespace WebshopAPI.BLL.Interfaces
     {
         Task<ModifyRolesResponseDTO> CreateRole(CreateOrDeleteRoleRequestDTO roleRequest);
         IEnumerable<string> GetRoles();
-        Task<bool> EditRole(EditRoleRequestDTO roleRequest);
+        Task<ModifyRolesResponseDTO> EditRole(EditRoleRequestDTO roleRequest);
         Task<ModifyRolesResponseDTO> AddRoleToUser(ModifyUserRolesRequestDTO roleRequest);
         Task<GetUsersByRoleResponseDTO> GetUsersByRole(string roleName);
         Task<GetRolesByUserNameResponseDTO> GetRolesByUser(string userName);

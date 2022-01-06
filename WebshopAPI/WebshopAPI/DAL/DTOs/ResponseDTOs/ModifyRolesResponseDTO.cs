@@ -1,8 +1,8 @@
 ﻿namespace WebshopAPI.DAL.DTOs.ResponseDTOs
 {
-    public class ModifyUserRolesResponseDTO
+    public class ModifyRolesResponseDTO
     {
-        public ModifyUserRolesResponseDTO(bool succeeded, string responseMessage)
+        public ModifyRolesResponseDTO(bool succeeded, string responseMessage)
         {
             Succeeded = succeeded;
             ResponseMessage = responseMessage;

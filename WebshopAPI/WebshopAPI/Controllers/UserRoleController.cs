@@ -18,7 +18,7 @@ namespace WebshopAPI.Controllers
         }
 
         [HttpPost("CreateRole")]
-        public async Task<IActionResult> CreateRole(CreateRoleRequestDTO roleRequest)
+        public async Task<IActionResult> CreateRole(CreateOrDeleteRoleRequestDTO roleRequest)
         {
             var isCreatingWasSuccessful = await _UserRoleBLL.CreateRole(roleRequest);
 
@@ -28,6 +28,19 @@ namespace WebshopAPI.Controllers
             }
 
             return BadRequest($"Creating {roleRequest.RoleName} role is not possible");
+        }
+
+        [HttpPost("RemoveRole")]
+        public async Task<IActionResult> RemoveRole([FromBody] CreateOrDeleteRoleRequestDTO roleRequest)
+        {
+            var removeResponse = await _UserRoleBLL.RemoveRole(roleRequest);
+
+            if (removeResponse.Succeeded)
+            {
+                return Ok(removeResponse.ResponseMessage);
+            }
+
+            return BadRequest(removeResponse.ResponseMessage);
         }
 
         [HttpGet("Roles")]

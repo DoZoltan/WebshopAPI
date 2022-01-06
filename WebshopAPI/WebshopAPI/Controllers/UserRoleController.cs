@@ -22,14 +22,14 @@ namespace WebshopAPI.Controllers
         [HttpPost("CreateRole")]
         public async Task<IActionResult> CreateRole(CreateOrDeleteRoleRequestDTO roleRequest)
         {
-            var isCreatingWasSuccessful = await _UserRoleBLL.CreateRole(roleRequest);
+            var creatingResponse = await _UserRoleBLL.CreateRole(roleRequest);
 
-            if (isCreatingWasSuccessful)
+            if (creatingResponse.Succeeded)
             {
-                return Ok($"The {roleRequest.RoleName} role has been successfully created");
+                return Ok(creatingResponse.ResponseMessage);
             }
 
-            return BadRequest($"Creating {roleRequest.RoleName} role is not possible");
+            return BadRequest(creatingResponse.ResponseMessages);
         }
 
         [HttpDelete("RemoveRole")]

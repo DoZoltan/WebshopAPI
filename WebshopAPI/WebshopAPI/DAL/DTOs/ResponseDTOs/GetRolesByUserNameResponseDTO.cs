@@ -16,4 +16,3 @@ namespace WebshopAPI.DAL.DTOs.ResponseDTOs
         public string ResponseMessage { get; set; }
     }
 }
-}

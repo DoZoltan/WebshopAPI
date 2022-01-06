@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using System.Linq;
 using WebshopAPI.DAL;
 using WebshopAPI.DAL.DALInterfaces;
+using WebshopAPI.DAL.Models;
 using WebshopAPI.Services.ExceptionHandling;
 
 namespace WebshopAPI
@@ -39,14 +42,22 @@ namespace WebshopAPI
                 => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 
             var allProviderTypes = System.Reflection.Assembly.GetAssembly(typeof(ICpuDAL))
-           .GetTypes().Where(t => t.Namespace != null).ToList();
+                .GetTypes().Where(t => t.Namespace != null).ToList();
 
             foreach (var intfc in allProviderTypes.Where(t => t.IsInterface))
             {
                 var impl = allProviderTypes.FirstOrDefault(c => c.IsClass && intfc.Name.Substring(1) == c.Name);
                 if (impl != null) services.AddScoped(intfc, impl);
             }
+            
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
+            services.AddIdentity<User, IdentityRole>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+                options.SignIn.RequireConfirmedAccount = false; //true esetén csak a megerõsítés után tud belépni a felhasználó
+            }).AddEntityFrameworkStores<ShopContext>();
+            
             services.AddControllers();
         }
 
@@ -65,6 +76,8 @@ namespace WebshopAPI
             app.UseCors("Access-Control-Allow-Origin");
 
             app.UseCustomExceptionHandler();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

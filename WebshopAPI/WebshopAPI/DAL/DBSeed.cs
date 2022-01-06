@@ -6,7 +6,7 @@ namespace WebshopAPI.DAL
 {
     public static class DBSeed
     {
-        //Extension metódus a ModelBuilder osztályhoz
+        //Extension metódus a ModelBuilder osztályhoz - már nincs használva
         public static void Seed(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Cpu>().HasData(

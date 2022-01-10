@@ -30,6 +30,7 @@ namespace WebshopAPI.DAL.DALClasses
                 await CreateCpus();
                 await CreateRams();
                 await CreateMotherboards();
+                await CreateOrderStatus();
                 return await CreateAdminUser();
             }
 
@@ -182,6 +183,28 @@ namespace WebshopAPI.DAL.DALClasses
             }
 
             return true;
+        }
+
+        
+        private async Task CreateOrderStatus()
+        {
+            var orderStatus = new OrderStatus
+            {
+                StatusName = "In cart"
+            };
+
+            var orderStatus2 = new OrderStatus
+            {
+                StatusName = "Ordered"
+            };
+
+            var orderStatus3 = new OrderStatus
+            {
+                StatusName = "Order completed"
+            };
+
+            var orderStatusTypes = new List<OrderStatus>() { orderStatus, orderStatus2, orderStatus3 };
+            await _context.Set<OrderStatus>().AddRangeAsync(orderStatusTypes);
         }
     }
 }

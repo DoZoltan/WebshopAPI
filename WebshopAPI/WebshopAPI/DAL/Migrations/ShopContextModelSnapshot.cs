@@ -150,29 +150,6 @@ namespace WebshopAPI.DAL.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("WebshopAPI.DAL.Models.CartContent", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CartId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductAmount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CartId");
-
-                    b.ToTable("CartContent");
-                });
-
             modelBuilder.Entity("WebshopAPI.DAL.Models.Cpu", b =>
                 {
                     b.Property<int>("ID")
@@ -277,17 +254,25 @@ namespace WebshopAPI.DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("OwnerId")
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("StatusId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OwnerId");
+                    b.HasIndex("StatusId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("WebshopAPI.DAL.Models.OrderContent", b =>
+            modelBuilder.Entity("WebshopAPI.DAL.Models.OrderItems", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -297,17 +282,32 @@ namespace WebshopAPI.DAL.Migrations
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductAmount")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderContent");
+                    b.ToTable("OrderItems");
+                });
+
+            modelBuilder.Entity("WebshopAPI.DAL.Models.OrderStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("StatusName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OrderStatus");
                 });
 
             modelBuilder.Entity("WebshopAPI.DAL.Models.Ram", b =>
@@ -352,25 +352,6 @@ namespace WebshopAPI.DAL.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Rams");
-                });
-
-            modelBuilder.Entity("WebshopAPI.DAL.Models.ShoppingCart", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("OwnerId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OwnerId")
-                        .IsUnique()
-                        .HasFilter("[OwnerId] IS NOT NULL");
-
-                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("WebshopAPI.DAL.Models.User", b =>
@@ -504,47 +485,28 @@ namespace WebshopAPI.DAL.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WebshopAPI.DAL.Models.CartContent", b =>
-                {
-                    b.HasOne("WebshopAPI.DAL.Models.ShoppingCart", "Cart")
-                        .WithMany()
-                        .HasForeignKey("CartId");
-
-                    b.Navigation("Cart");
-                });
-
             modelBuilder.Entity("WebshopAPI.DAL.Models.Order", b =>
                 {
-                    b.HasOne("WebshopAPI.DAL.Models.User", "Owner")
-                        .WithMany("Orders")
-                        .HasForeignKey("OwnerId");
+                    b.HasOne("WebshopAPI.DAL.Models.OrderStatus", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusId");
 
-                    b.Navigation("Owner");
+                    b.HasOne("WebshopAPI.DAL.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Status");
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("WebshopAPI.DAL.Models.OrderContent", b =>
+            modelBuilder.Entity("WebshopAPI.DAL.Models.OrderItems", b =>
                 {
                     b.HasOne("WebshopAPI.DAL.Models.Order", "Order")
                         .WithMany()
                         .HasForeignKey("OrderId");
 
                     b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("WebshopAPI.DAL.Models.ShoppingCart", b =>
-                {
-                    b.HasOne("WebshopAPI.DAL.Models.User", "Owner")
-                        .WithOne("Cart")
-                        .HasForeignKey("WebshopAPI.DAL.Models.ShoppingCart", "OwnerId");
-
-                    b.Navigation("Owner");
-                });
-
-            modelBuilder.Entity("WebshopAPI.DAL.Models.User", b =>
-                {
-                    b.Navigation("Cart");
-
-                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

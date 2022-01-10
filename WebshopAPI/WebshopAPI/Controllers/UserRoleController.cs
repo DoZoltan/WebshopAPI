@@ -19,6 +19,8 @@ namespace WebshopAPI.Controllers
             _UserRoleBLL = UserRoleBLL;
         }
 
+        // nem kell a post / put / get / delete műveleteknek külön-külön route, mint ahogyan most van
+        // elég ha a HTTP metódus más, így ettől függően fog eldőlni, hogy a ../UserRole URI alatt mi fog történni
         [HttpPost("CreateRole")]
         public async Task<IActionResult> CreateRole(CreateOrDeleteRoleRequestDTO roleRequest)
         {
@@ -26,6 +28,8 @@ namespace WebshopAPI.Controllers
 
             if (creatingResponse.Succeeded)
             {
+                //return Created(); létrehozáskor 201-es állapotkódot adjunk vissza
+                //CreatedAtAction(nameof(Get), new { id = result.ID }, result);
                 return Ok(creatingResponse.ResponseMessages);
             }
 
@@ -51,6 +55,7 @@ namespace WebshopAPI.Controllers
             return Ok(_UserRoleBLL.GetRoles());
         }
 
+        // itt update történik, vagyis post helyett put kellene
         [HttpPost("EditRole")]
         public async Task<IActionResult> EditRole(EditRoleRequestDTO roleRequest)
         {

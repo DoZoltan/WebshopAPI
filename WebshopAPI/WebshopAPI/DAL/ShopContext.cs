@@ -17,5 +17,6 @@ namespace WebshopAPI.DAL
         public DbSet<Motherboard> Motherboards { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItems> OrderItems { get; set; }
+        public DbSet<OrderStatus> OrderStatus { get; set; }
     }
 }
